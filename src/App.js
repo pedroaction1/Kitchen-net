@@ -1,9 +1,11 @@
 import logo from './logo3.png';
 import './App.css';
+import React from 'react';
+import { Link } from 'react-router-dom'
 
 function App() {
   return (
-    <div className="BG">
+    <div className="BGR">
     <div className="App">
         <div className="Container">
           <div>
@@ -35,7 +37,9 @@ function App() {
           </div>
 
           <div>
-            <button className='button'>Logar</button>
+            <Link to="/pages/paginaprincipal">
+             <button className='button'>Logar</button>
+             </Link>
           </div>
 
           <h5>Esqueci a Senha</h5>

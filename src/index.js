@@ -1,15 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from 'react-router-dom'
 import 'semantic-ui-css/semantic.min.css'
 
+import paginaprincipal from './pages/paginaprincipal';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Router>
+    <Switch>
+      <Route path="/" component={App} exact/>
+      <Route path="/pages/paginaprincipal" component={paginaprincipal}/>
+    </Switch>
+  </Router>,
   document.getElementById('root')
 );
 

@@ -1,0 +1,43 @@
+
+  .App {
+    text-align: center;
+  }
+  
+  .BGW {
+      background-color: #fff;
+  }
+
+  .Navbar {
+      width: 100%;
+      margin: 0 auto;
+      color: white;
+      display: flex;
+      background-color: #e24333;
+      flex-direction: row;
+      
+  }
+
+  .TextoKitchen{
+      font-size: 28px;
+      text-decoration: solid;
+      margin: 0em 1em 0em 1em;
+  }
+
+  .LogoP {
+      margin: 1em 2em 0em;
+      width: 25%;
+  }
+
+  .button {
+    margin: 2em auto 0em;
+    width: 35%;
+    height: 3em;
+    color: white;
+    background-color: #e24333;
+    border-color: transparent;
+    border-radius: 25px;;
+    cursor:pointer; 
+  }
+
+  
+  
