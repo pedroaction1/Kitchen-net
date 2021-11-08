@@ -1,9 +1,19 @@
 import logo from './logo3.png';
 import './App.css';
-import React from 'react';
 import { Link } from 'react-router-dom'
+import React, { useState } from 'react';
+ 
+function Login(props) {
+  const username = useFormInput('');
+  const password = useFormInput('');
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+ 
+  // handle button click of login form
+  const handleLogin = () => {
+    props.history.push('/pages/paginaprincipal');
+  }
 
-function App() {
   return (
     <div className="BGR">
     <div className="App">
@@ -25,20 +35,20 @@ function App() {
             <label className='GoodLabel' ><strong>Email:</strong></label>
 
             <div>
-              <input placeholder='Email' className='input'></input>
+              <input placeholder='Email' {...username}  autoComplete="new-password" className='input'></input>
             </div>
 
             <label className='GoodLabel' ><strong>Senha:</strong></label>
 
             <div>
-              <input placeholder='Senha' className='input'></input>
+              <input placeholder='Senha' {...password} autoComplete="new-password" className='input'></input>
             </div>
 
           </div>
 
           <div>
             <Link to="/pages/paginaprincipal">
-             <button className='button'>Logar</button>
+             <button className='button' onClick={handleLogin}>Logar</button>
              </Link>
           </div>
 
@@ -50,4 +60,16 @@ function App() {
   );
 }
 
-export default App;
+const useFormInput = initialValue => {
+  const [value, setValue] = useState(initialValue);
+ 
+  const handleChange = e => {
+    setValue(e.target.value);
+  }
+  return {
+    value,
+    onChange: handleChange
+  }
+}
+
+export default Login;

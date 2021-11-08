@@ -3,7 +3,13 @@ import './paginaprincipal.css';
 import React from 'react';
 import { Link } from 'react-router-dom'
 
-function paginaprincipal() {
+function paginaprincipal(props) {
+
+  const handleLogout = () => {
+    props.history.push('/App');
+  }
+  
+
   return (
     <div className="BGW">
         <header className='Navbar'>
