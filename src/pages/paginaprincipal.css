@@ -8,13 +8,7 @@
   }
 
   .Navbar {
-      width: 100%;
-      margin: 0 auto;
-      color: white;
-      display: flex;
-      background-color: #e24333;
-      flex-direction: row;
-      
+      background-color: #e24333; 
   }
 
   .TextoKitchen{
@@ -25,7 +19,7 @@
 
   .LogoP {
       margin: 1em 2em 0em;
-      width: 25%;
+      width: 12%;
   }
 
   .button {
@@ -39,5 +33,14 @@
     cursor:pointer; 
   }
 
+
+.NavLinks {
+  color: white;
+  display: flex;
+  font-size: 1.2rem;
+  justify-content: space-between;
+}
   
-  
+Link {
+  color: white;
+}
