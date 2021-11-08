@@ -1,8 +1,10 @@
 import logo from './logo3.png';
 import './App.css';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import  LoginUser  from './services/api';
 import React, { useState } from 'react';
- 
+import {Button} from 'semantic-ui-react';
+
 function Login(props) {
   const username = useFormInput('');
   const password = useFormInput('');
@@ -11,7 +13,8 @@ function Login(props) {
  
   // handle button click of login form
   const handleLogin = () => {
-    props.history.push('/pages/paginaprincipal');
+    setError(null);
+    LoginUser();
   }
 
   return (
@@ -48,7 +51,7 @@ function Login(props) {
 
           <div>
             <Link to="/pages/paginaprincipal">
-             <button className='button' onClick={handleLogin}>Logar</button>
+                <Button color="red">Login</Button>           
              </Link>
           </div>
 
