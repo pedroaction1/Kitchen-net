@@ -4,10 +4,17 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom'
 import '../logo3.png';
 import './paginaprincipal.css';
-
+import Denuncia from '../components/Denuncia'; 
 import { Grid, Segment, Header, List, Icon, GridColumn,Menu, Label} from 'semantic-ui-react';
+import DenunciaRespondida from '../components/DenunciaRespondida';
 
 export default (props)=> {
+
+  const [numero,setNumero] = useState(0);
+
+  function MonstrarDenuncia(){
+    
+  }
 
   const handleLogout = () => {
     props.history.push('/App');
@@ -35,19 +42,21 @@ export default (props)=> {
       </div>
     </Segment>    
 
-    <Grid>
-      <Grid.Column width={2}>
-        <Menu fluid vertical>
-          <Menu.Item name="pendentes">
-            <Label color="red">4</Label>
+    <Grid style={{}}>
+      <Grid.Column>
+        <Menu vertical style={{marginLeft:"20px",padding:"1rem"}}>
+          <Menu.Item name="pendentes" active={active === "pendentes"} onClick={(e)=>{setActive("pendentes")}}>
+            <Label color="red">{numero}</Label>
             Pendentes
           </Menu.Item>
-          <Menu.Item name="respondidas">
-            respondidas
+          <Menu.Item name="respondidas" active={active === "respondidas"} onClick={(e)=>{setActive("respondidas")}}>
+            Respondidas
           </Menu.Item>
         </Menu>
       </Grid.Column>
-      <GridColumn width={16}></GridColumn>
+      <Grid.Column width="8" style={{margin:"auto"}}>
+        {MonstrarDenuncia()}
+      </Grid.Column>
     </Grid>
 
     </>

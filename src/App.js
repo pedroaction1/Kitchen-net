@@ -6,6 +6,10 @@ import {Button} from 'semantic-ui-react';
 
 const Login = (props) => {
   
+  const usuario = {
+    
+  }
+
   const [ password, setPassword ] = useState();
   const [ username, setUsername] = useState();
 
@@ -46,9 +50,9 @@ const Login = (props) => {
               </Link>
           </div>
 
+          <h5>Esqueci a Senha</h5>
+
         </div>
-      
-        <h5>Esqueci a Senha</h5>
       
       </div>
     </div>
