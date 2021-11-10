@@ -26,7 +26,7 @@ export default (props)=> {
     <Segment style={{backgroundColor:"#e24333",display:"flex",alignItems:"center"}} className="Navbar">
       <div style={{display:"flex"}}>
           <img src={logo} className="LogoP" />
-        <Header as="h1" style={{color:"white", marginTop:"25px"}}>Receitas pendentes</Header>
+        <Header as="h1" style={{color:"white", marginTop:"6vh"}}>Denúncias pendentes</Header>
       </div>
 
       <div style={{display:"flex",alignItems:"center",flexDirection:"column",marginLeft:"auto",marginRight:"5%"}}>
@@ -35,7 +35,7 @@ export default (props)=> {
             <Link to="#" style={{color:"white",marginLeft:"20px"}}>
               Altera senha
             </Link>       
-            <Link style={{color:"white",marginLeft:"20px"}}>
+            <Link to="../" style={{color:"white",marginLeft:"20px"}} >
               Sair
             </Link>   
         </div>

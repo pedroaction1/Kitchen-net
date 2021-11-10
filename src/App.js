@@ -3,15 +3,15 @@ import './App.css';
 import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
 import {Button} from 'semantic-ui-react';
+import pegaruser from './services/PegarUsuario/Getuser'
+
 
 const Login = (props) => {
-  
-  const usuario = {
-    
-  }
 
   const [ password, setPassword ] = useState();
   const [ username, setUsername] = useState();
+
+  
 
   return (
     <div className="BGR">
@@ -35,11 +35,11 @@ const Login = (props) => {
 
               <label className='GoodLabel' ><strong>Email:</strong></label>
               <div>
-                <input placeholder='Email' {...username}  onClick={(e)=> {setUsername(e.target.value)}} autoComplete="new-password" className='input'></input>
+                <input placeholder='Email'  type="email" name="email" id="email" {...username}  onClick={(e)=> {setUsername(e.target.value)}} autoComplete="new-password" className='input'></input>
               </div>
               <label className='GoodLabel' ><strong>Senha:</strong></label>
               <div>
-                <input placeholder='Senha' {...password} onClick={(e)=> {setPassword(e.target.value)}} autoComplete="new-password" className='input'></input>
+                <input placeholder='Senha' type="password" name="senha" id="senha" {...password} onClick={(e)=> {setPassword(e.target.value)}}  autoComplete="new-password" className='input'></input>
               </div>
 
           </div>
