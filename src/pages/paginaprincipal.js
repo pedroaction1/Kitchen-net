@@ -4,6 +4,9 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom'
 import '../logo3.png';
 import './paginaprincipal.css';
+import Receita from '../components/Receita';
+import ReceitaResponder from '../components/ReceitaResponder';
+import DenunciaResponder from '../components/DenunciaResponder';
 import Denuncia from '../components/Denuncia'; 
 import { Grid, Segment, Header, List, Icon, GridColumn,Menu, Label} from 'semantic-ui-react';
 import DenunciaRespondida from '../components/DenunciaRespondida';
@@ -56,6 +59,7 @@ export default (props)=> {
       </Grid.Column>
       <Grid.Column width="8" style={{margin:"auto"}}>
         {MonstrarDenuncia()}
+        <ReceitaResponder></ReceitaResponder>
       </Grid.Column>
     </Grid>
 
