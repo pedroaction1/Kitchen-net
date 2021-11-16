@@ -10,19 +10,22 @@ import DenunciaResponder from '../components/DenunciaResponder';
 import Denuncia from '../components/Denuncia'; 
 import { Grid, Segment, Header, List, Icon, GridColumn,Menu, Label} from 'semantic-ui-react';
 import DenunciaRespondida from '../components/DenunciaRespondida';
+import { render } from '@testing-library/react';
 
 export default (props)=> {
 
   const [numero,setNumero] = useState(0);
 
   function MonstrarDenuncia(){
-      
+
   }
 
   const handleLogout = () => {
     props.history.push('/App');
   }
   const [active,setActive] = useState("pendentes");
+  const [usuario, setUsuario] = useState("denuncia");
+
   return (
     
     <>
@@ -59,7 +62,7 @@ export default (props)=> {
       </Grid.Column>
       <Grid.Column width="8" style={{margin:"auto"}}>
         {MonstrarDenuncia()}
-        <Receita></Receita>
+        <ReceitaResponder></ReceitaResponder>
       </Grid.Column>
     </Grid>
 

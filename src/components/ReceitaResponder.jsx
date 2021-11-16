@@ -1,7 +1,7 @@
 import '../pages/paginaprincipal.css';
 import React, { useState } from 'react';
 import TextareaAutosize from "react-textarea-autosize";
-import {Card,Button,Icon,TextArea,Form,Grid,Segment} from 'semantic-ui-react';
+import {Card,Button,Icon,TextArea,Form,Input} from 'semantic-ui-react';
 
 export default (props)=> {
     return(
@@ -11,20 +11,18 @@ export default (props)=> {
                     <Card.Header style={{color:'white'}}>
                         <Icon name='angle left' style={{marginTop:'12px'}}/>
                         Voltar
-                        <Button.Group floated='right'> 
-                        <Button color="green">Aprovar</Button>
-                        <Button color="red">Reprovar</Button>
-                        </Button.Group> 
+                        <Button style={{ border: "1px solid black"}} floated='right'size='tiny' color="green">Aprovar</Button>
+                        <Button style={{ border: "1px solid black"}} floated='right'size='tiny' color="red">Reprovar</Button>
                     </Card.Header>
                 </Card.Content>
                 <Card.Content>
                     <Form>
-                    Título: 
-                    <TextareaAutosize minRows={1} maxRows={2}/>
-                    Autor: é dinamico
-                    Sobre: <TextareaAutosize minRows={1} maxRows={2}/>
-                    Data: coloca TextboxGrande tbm
-                    Porções: coloca textbox pequena
+                        <strong>Título:</strong>
+                    <TextArea size='medium' style={{ minHeight: 45, maxHeight: 45}} />
+                    <strong>Autor:</strong> é dinamico <br />
+                    <strong>Sobre:</strong> <TextareaAutosize minRows={1} maxRows={2}/>
+                    Data: <Input type='date' placeholder='Data...'/>
+                    Porções: <Input type='number' size='small' />
                     </Form>
                     Mídia Principal: Vai aprender react filho
                     Ingredientes: é dinamico
