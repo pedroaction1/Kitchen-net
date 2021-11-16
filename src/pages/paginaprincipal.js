@@ -16,7 +16,7 @@ export default (props)=> {
   const [numero,setNumero] = useState(0);
 
   function MonstrarDenuncia(){
-    
+      
   }
 
   const handleLogout = () => {
@@ -59,7 +59,7 @@ export default (props)=> {
       </Grid.Column>
       <Grid.Column width="8" style={{margin:"auto"}}>
         {MonstrarDenuncia()}
-        <ReceitaResponder></ReceitaResponder>
+        <Receita></Receita>
       </Grid.Column>
     </Grid>
 
