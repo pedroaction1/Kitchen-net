@@ -62,7 +62,7 @@ export default (props)=> {
       </Grid.Column>
       <Grid.Column width="8" style={{margin:"auto"}}>
         {MonstrarDenuncia()}
-        <ReceitaResponder></ReceitaResponder>
+        <DenunciaResponder></DenunciaResponder>
       </Grid.Column>
     </Grid>
 
