@@ -1,17 +1,32 @@
 import logo from './logo3.png';
 import './App.css';
-import { Link } from 'react-router-dom';
+import { Link,Redirect, useHistory} from 'react-router-dom';
 import React, { useState } from 'react';
 import {Button} from 'semantic-ui-react';
 import pegaruser from './services/PegarUsuario/Getuser'
+import 'react-router-dom';
 
+function Login(props) {
 
-const Login = (props) => {
+  const [ password, setPassword ] = useState("");
+  const [ username, setUsername] = useState("");
+  const [path,setPath] = useState();
+  const history = useHistory();
+    
+  function Logar(){
+    
+    if(username == "moderador@gmail.com"){
+      history.push("/pages/pagina")
+    }
+    else if(username == "curador@gmail.com"){
+      history.push("/pages/paginaprincipal")
+      //<Link to=""></Link>
+    }
+    else {
+      console.log("bruh");
 
-  const [ password, setPassword ] = useState();
-  const [ username, setUsername] = useState();
-
-  
+    }
+  }  
 
   return (
     <div className="BGR">
@@ -35,19 +50,19 @@ const Login = (props) => {
 
               <label className='GoodLabel' ><strong>Email:</strong></label>
               <div>
-                <input placeholder='Email'  type="email" name="email" id="email" {...username}  onClick={(e)=> {setUsername(e.target.value)}} autoComplete="new-password" className='input'></input>
+                <input placeholder='Email'  type="email" name="email" id="email"  onChange={(e)=>{setUsername(e.target.value)}} className='input'></input>
               </div>
               <label className='GoodLabel' ><strong>Senha:</strong></label>
               <div>
-                <input placeholder='Senha' type="password" name="senha" id="senha" {...password} onClick={(e)=> {setPassword(e.target.value)}}  autoComplete="new-password" className='input'></input>
+                <input placeholder='Senha' type="password" name="senha" id="senha" {...password}  onChange={(e)=>{setPassword(e.target.value)}}  className='input'></input>
               </div>
 
           </div>
 
           <div>
-              <Link to="/pages/paginaprincipal">
-                  <Button color="red">Login</Button>           
-              </Link>
+              
+              <Button color="red" onClick={()=>{Logar()}}>Login</Button>           
+  
           </div>
 
           <h5>Esqueci a Senha</h5>

@@ -11,6 +11,7 @@ import 'semantic-ui-css/semantic.min.css'
 import paginaprincipal from './pages/paginaprincipal';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import pagina from './pages/pagina';
 
 
 ReactDOM.render(
@@ -18,6 +19,7 @@ ReactDOM.render(
     <Switch>
       <Route path="/" component={App} exact/>
       <Route path="/pages/paginaprincipal" component={paginaprincipal}/>
+      <Route path="/pages/pagina" component={pagina}/>
     </Switch>
   </Router>,
   document.getElementById('root')

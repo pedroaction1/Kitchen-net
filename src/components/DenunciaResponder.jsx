@@ -6,18 +6,22 @@ export default (props)=> {
     return(
         <>
             <Card style={{width:"100%"}}>
-                <Card.Content style={{ backgroundColor:"#e24333"}}>
+                <Card.Content style={{ backgroundColor:"#ff6859"}}>
                     <Card.Header style={{color:'white'}}>
-                        <Icon name='angle left' style={{marginTop:'12px'}}/>
-                        Voltar
-                        <Button style={{ border: "1px solid black", backgroundColor: "#ba1b1d", color: "white"}} floated='right'size='tiny' >Rejeitar denúncia</Button>
-                        <Button style={{ border: "1px solid black"}} floated='right'size='tiny' color="green">Aceitar denúncia</Button>
+                        <Button style={{marginBottom:'12px'}} color="blue">
+                        <Icon name='angle left' />
+                            Voltar
+                        </Button>
+                       <Button.Group floated='right' fluid> 
+                            <Button color="red" >Rejeitar denúncia</Button>
+                            <Button color="green" >Aceitar denúncia</Button>
+                       </Button.Group>
                     </Card.Header>
                 </Card.Content>
                 <Card.Content>
-                    <h1>Comentário da Receita - Coisa Dinamica</h1>
-                    <p>Razão de denúncia: Coisa dinamica</p>
-                    <h1>Comentário denunciado:</h1>
+                    <h3>Comentário da Receita - Batata Frita Crocante</h3>
+                    <p>Razão de denúncia: Desconforto</p>
+                    <h3>Comentário denunciado:</h3>
                     <p>"Coisa dinamica"</p>
                 </Card.Content>
             </Card>

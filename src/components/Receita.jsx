@@ -3,7 +3,12 @@ import React, { useState } from 'react';
 import {Card,Button,Image} from 'semantic-ui-react';
 
 export default (props)=> {
+
+    const [show,setShow] = useState(true);
+
     return(
+        (show)?
+        (
         <>
             <Card style={{width:"100%"}}>
                 <Card.Content>
@@ -12,7 +17,7 @@ export default (props)=> {
                         size='small'
                         src=''
                     />
-                    <Card.Header textAlign="center" style={{marginTop:"45px"}}>Ovo de Páscoa de Chocolate Crocante</Card.Header>
+                    <Card.Header textAlign="center" style={{marginTop:"45px"}}> {props.Titulo}</Card.Header>
                 </Card.Content>
                 <Card.Content>
                     <Button basic color="blue" fluid>Visualizar</Button>
@@ -22,6 +27,8 @@ export default (props)=> {
                   </Button.Group> 
                 </Card.Content>
             </Card>
-        </>
+        </>)
+        :
+        null
     )
 }

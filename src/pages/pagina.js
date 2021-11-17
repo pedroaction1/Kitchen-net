@@ -1,6 +1,6 @@
 import logo from '../logo3.png';
 import './paginaprincipal.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import '../logo3.png';
 import './paginaprincipal.css';
@@ -8,30 +8,47 @@ import Receita from '../components/Receita';
 import ReceitaResponder from '../components/ReceitaResponder';
 import DenunciaResponder from '../components/DenunciaResponder';
 import Denuncia from '../components/Denuncia'; 
-import { Grid, Segment, Header, List, Icon, GridColumn,Menu, Label} from 'semantic-ui-react';
+import { Grid, Segment, Header, List, Icon, GridColumn,Menu, Label, StepContent} from 'semantic-ui-react';
 import DenunciaRespondida from '../components/DenunciaRespondida';
 import { render } from '@testing-library/react';
 
-export default (props)=> {
-
-  const [numero,setNumero] = useState(0);
-
-  const data = [
+const data = [
     {
-      "Titulo": "Pão de Queijo Ralado"
+        "Receita": "Batata frita sequinha e crocante",
+        "Razao": "Desconforto",
+        "Comentario": "Queimei a lingua nessa merda, muito ruim!",
+        "Data": "14/11/2021",
+        "Id": 1
     },
     {
-      "Titulo": "Queijadinha de Queijo"
-    }
-  ]
+          "Receita": "Pão de queijo doce",
+          "Razao": "Ofensa",
+          "Comentario": "Eu fiz e o não ficou doce!!",
+          "Data": "12/11/2021",
+          "Id": 2  
+    },
+    {
+      "Receita": "Pão de queijo doce",
+      "Razao": "Ofensa",
+      "Comentario": "Eu fiz e o não ficou doce!!",
+      "Data": "12/11/2021",
+      "Id": 2  
+}
+]
 
-  function MonstrarReceita(){
-    return (
-      data.map(item=>{
+export default (props)=> {
+
+  const [numero,setNumero] = useState(data.length - 1);
+
+  function MonstrarDenuncia(){
+    
+    return(
+    data.map(item=>{
         return(
-          <Receita Titulo={item.Titulo}/>
+        <Denuncia Receita={item.Receita} Razao={item.Razao} Comentario={item.Comentario} 
+        Data={item.Data} onChange={()=> {setNumero(numero - 1)}}/>
         )
-      })
+    })
     )
   }
 
@@ -39,6 +56,15 @@ export default (props)=> {
     props.history.push('/App');
   }
   const [active,setActive] = useState("pendentes");
+  const [usuario, setUsuario] = useState("denuncia");
+
+  useEffect(()=>{
+      setNumero(numero + 1);
+      console.log("ahhhh")
+      return ()=>{
+          setNumero(numero - 1);
+      }
+  },[])
 
   return (
     
@@ -46,11 +72,11 @@ export default (props)=> {
     <Segment style={{backgroundColor:"#e24333",display:"flex",alignItems:"center"}} className="Navbar">
       <div style={{display:"flex"}}>
           <img src={logo} className="LogoP" />
-        <Header as="h1" style={{color:"white", marginTop:"6vh"}}>Receitas pendentes</Header>
+        <Header as="h1" style={{color:"white", marginTop:"6vh"}}>Denúncias pendentes</Header>
       </div>
 
       <div style={{display:"flex",alignItems:"center",flexDirection:"column",marginLeft:"auto",marginRight:"5%"}}>
-        <Header as="h4" style={{color:"white"}}>logado como: Alexadre da Silva Pereira</Header>
+        <Header as="h4" style={{color:"white"}}>logado como: Sergio oliveira da silva carlos</Header>
         <div className="NavLinks">
             <Link to="#" style={{color:"white",marginLeft:"20px"}}>
               Altera senha
@@ -75,7 +101,7 @@ export default (props)=> {
         </Menu>
       </Grid.Column>
       <Grid.Column width="8" style={{margin:"auto"}}>
-        {MonstrarReceita()}
+        {MonstrarDenuncia()}
       </Grid.Column>
     </Grid>
 
