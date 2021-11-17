@@ -38,8 +38,9 @@ export default (props)=> {
         )
     }
     useEffect(()=>{
-        console.log(2)
-        return props.OnChange
+        return ()=>{
+            console.log("oi")
+        }
     })
     return(
         (show)?
