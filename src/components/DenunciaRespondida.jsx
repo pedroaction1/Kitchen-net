@@ -7,21 +7,16 @@ export default (props)=> {
         <>
             <Card style={{width:"100%"}}>
                 <Card.Content>
-                    <Card.Header>Comentario da receita: Batatinha frita crocante</Card.Header>
-                    <Card.Meta>Razão de denúncia: Desconforto</Card.Meta>
+                    <Card.Header>Comentario da receita: {props.Receita}</Card.Header>
+                    <Card.Meta>Razão de denúncia: {props.Razao}</Card.Meta>
                     <Card.Description>
-                        Comentario denunciado: KKKKKKKKKKKK, parece meu p#@#
+                        {props.Tipo} denunciado: {props.Denuncia}
                     </Card.Description>
-                    <Card.Meta>Respondido: 17/08/2021 ás 17:10</Card.Meta>
+                    <Card.Meta>Respondido: {props.Data}</Card.Meta>
                     <Card.Content>
-                        Status: <span style={{color:'green'}}>Aprovada</span>
+                        Status: <span style={{color:'green'}}>{props.Status}</span>
                     </Card.Content>
                 </Card.Content>
-                <CardContent>
-                    <Button basic color="blue" fluid>
-                        visualizar
-                    </Button>
-                </CardContent>
             </Card>
         </>
     )

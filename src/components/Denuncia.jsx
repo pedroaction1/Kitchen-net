@@ -47,15 +47,12 @@ export default (props)=> {
         (
         <>
             <Card style={{width:"100%"}}>
-                <Card.Content>
+                <Card.Content key={props.Id}>
                     <Card.Header>Comentario da receita: {props.Receita}</Card.Header>
                     <Card.Meta>Razão de denúncia: {props.razao}</Card.Meta>
                     <Card.Description>
-                        Comentario denunciado: {props.Comentario}
+                        {props.Tipo} denunciado: {props.Denuncia}
                     </Card.Description>
-                    <Card.Meta>
-                        Comentario denunciado em: {props.Data}
-                    </Card.Meta>
                 </Card.Content>
                 <Card.Content>
                   <Button.Group fluid style={{marginTop:"10px"}}> 

@@ -1,6 +1,6 @@
 import logo from '../logo3.png';
 import './paginaprincipal.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import { Link } from 'react-router-dom'
 import '../logo3.png';
 import './paginaprincipal.css';
@@ -11,17 +11,35 @@ import Denuncia from '../components/Denuncia';
 import { Grid, Segment, Header, List, Icon, GridColumn,Menu, Label} from 'semantic-ui-react';
 import DenunciaRespondida from '../components/DenunciaRespondida';
 import { render } from '@testing-library/react';
+import img1 from '../tempImgs/pao-de-queijo-mineiro-nr.jpg'
+import img2 from '../tempImgs/queijadinha.jpg'
 
 export default (props)=> {
 
   const [numero,setNumero] = useState(0);
 
+
   const data = [
     {
-      "Titulo": "Pão de Queijo Ralado"
+      "Titulo": "Pão de Queijo Crocante",
+      "Imagem": ''+ img1 +''
     },
     {
-      "Titulo": "Queijadinha de Queijo"
+      "Titulo": "Queijadinha Perfeita",
+      "Imagem": ''+ img2 +''
+    }
+  ]
+
+  const dataRes = [
+    {
+      "Título": "Pão de Queijo Crocante",
+      "Autor": "",
+      "Sobre": "",
+      "Data": "",
+      "Porcoes": "",
+      "Midia": "",
+      "Ingrediente": "",
+
     }
   ]
 
@@ -29,7 +47,7 @@ export default (props)=> {
     return (
       data.map(item=>{
         return(
-          <Receita Titulo={item.Titulo}/>
+          <Receita Imagem={item.Imagem} Titulo={item.Titulo}/>
         )
       })
     )
@@ -66,7 +84,6 @@ export default (props)=> {
       <Grid.Column>
         <Menu vertical style={{marginLeft:"20px",padding:"1rem"}}>
           <Menu.Item name="pendentes" active={active === "pendentes"} onClick={(e)=>{setActive("pendentes")}}>
-            <Label color="red">{numero}</Label>
             Pendentes
           </Menu.Item>
           <Menu.Item name="respondidas" active={active === "respondidas"} onClick={(e)=>{setActive("respondidas")}}>
