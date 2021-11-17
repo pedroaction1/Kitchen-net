@@ -48,17 +48,17 @@ export default (props)=> {
         <>
             <Card style={{width:"100%"}}>
                 <Card.Content key={props.Id}>
-                    <Card.Header>Comentario da receita: {props.Receita}</Card.Header>
-                    <Card.Meta>Razão de denúncia: {props.razao}</Card.Meta>
+                    <Card.Header>{props.Tipo} da receita: {props.Receita}</Card.Header>
+                    <Card.Meta>Razão de denúncia: {props.Razao}</Card.Meta>
                     <Card.Description>
                         {props.Tipo} denunciado: {props.Denuncia}
                     </Card.Description>
                 </Card.Content>
                 <Card.Content>
-                  <Button.Group fluid style={{marginTop:"10px"}}> 
-                    <Button basic color="green" onClick={()=>{setConfirm("approve")}}>Aprovar</Button>
-                    <Button basic color="red" onClick={()=>{setConfirm("decline")}}>Reprovar</Button>
-                  </Button.Group> 
+                    <Button.Group size='medium' floated='right'>
+                     <Button  color="green"  onClick={()=>{setConfirm("approve")}}>Aprovar</Button>
+                     <Button  color="red" onClick={()=>{setConfirm("decline")}}>Reprovar</Button> 
+                    </Button.Group>
                 </Card.Content>
             </Card>
 

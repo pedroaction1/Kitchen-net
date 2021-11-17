@@ -13,27 +13,27 @@ import DenunciaRespondida from '../components/DenunciaRespondida';
 import { render } from '@testing-library/react';
 
 const data = [
-    {
-        "Receita": "Batata frita sequinha e crocante",
-        "Razao": "Desconforto",
-        "Comentario": "Queimei a lingua nessa merda, muito ruim!",
-        "Playlist": null,
-        "Id": 1
-    },
-    {
-          "Receita": "Pão de queijo doce",
-          "Razao": "Ofensa",
-          "Comentario": "Eu fiz e o não ficou doce!!",
-          "Playlist": null,
-          "Id": 2  
-    },
-    {
-      "Receita": "Zé pagodinho funk do ovo",
+  {
+      "Receita": "Batata frita sequinha e crocante",
+      "Razao": "Desconforto",
+      "Comentario": "Queimei a lingua nessa merda, muito ruim!",
+      "Playlist": null,
+      "Id": 1
+  },
+  {
+      "Receita": "Pão de queijo doce",
       "Razao": "Ofensa",
-      "Playlist": "Inapropriado!!",
-      "Comentario": null,
-      "Id": 3
-}
+      "Comentario": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse congue, nisl a feugiat consequat, orci eros mattis urna, a pulvinar turpis ex non leo. In pretium tristique est, ut sodales nunc aliquam et. Phasellus et ex semper, aliquam ante id, fermentum massa. Suspendisse ut dui varius, scelerisque ligula ut, euismod nulla. Ut libero nisl, finibus quis turpis a, scelerisque euismod magna. Morbi sit amet velit erat. Duis lacinia, quam sed vulputate ultricies, eros nibh mollis ante, quis accumsan augue elit efficitur mauris. Etiam hendrerit et nibh fermentum condimentum. Suspendisse fermentum pharetra orci, in gravida metus venenatis porta. Proin rutrum purus non neque imperdiet fermentum. Sed venenatis posuere magna, ac mattis dolor tristique ac. Sed vehicula nisi eget diam placerat laoreet. Pellentesque tincidunt fringilla quam, at laoreet magna sollicitudin rutrum. Sed in pharetra urna. Proin mauris est, fermentum sed blandit ac, dapibus sit amet mi. Donec placerat congue vulputate.",
+      "Playlist": null,
+      "Id": 2  
+  },
+  {
+    "Receita": "Zé pagodinho funk do ovo",
+    "Razao": "Ofensa",
+    "Playlist": "Inapropriado!!",
+    "Comentario": null,
+    "Id": 3
+  }
 ]
 
 const dataRes = [
@@ -56,12 +56,15 @@ export default (props)=> {
   function MonstrarDenuncia(){
      return(
         data.map(item=>{
-            if(item.Comentario != null){
-              return(<Denuncia Id={item.Id} Receita={item.Receita} Razao={item.Razao} Tipo="Playlist" Denuncia={item.Playlist}/>)
-            }
-            else{
-              return(<Denuncia Id={item.Id} Receita={item.Receita} Razao={item.Razao} Tipo="Comentário" Denuncia={item.Comentario}/>)  
-            }
+          if( item.Playlist != null) {
+            return(
+              <Denuncia Id={item.Id} Receita={item.Receita} Razao={item.Razao} Tipo="Playlist" Denuncia={item.Playlist}/>
+              )
+          }else{
+            return(
+              <Denuncia Id={item.Id} Receita={item.Receita} Razao={item.Razao} Tipo="Comentário" Denuncia={item.Comentario}/>
+              )
+          }
         })
     )
   }
@@ -77,7 +80,7 @@ export default (props)=> {
     <Segment style={{backgroundColor:"#e24333",display:"flex",alignItems:"center"}} className="Navbar">
       <div style={{display:"flex"}}>
           <img src={logo} className="LogoP" />
-        <Header as="h1" style={{color:"white", marginTop:"6vh"}}>Denúncias pendentes</Header>
+        <Header as="h1" style={{color:"white", marginTop:"3.5vh"}}>Denúncias pendentes</Header>
       </div>
 
       <div style={{display:"flex",alignItems:"center",flexDirection:"column",marginLeft:"auto",marginRight:"5%"}}>
@@ -106,7 +109,6 @@ export default (props)=> {
       </Grid.Column>
       <Grid.Column width="8" style={{margin:"auto"}}>
         {MonstrarDenuncia()}
-
       </Grid.Column>
     </Grid>
 

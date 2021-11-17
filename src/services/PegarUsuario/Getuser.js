@@ -1,7 +1,16 @@
 import axios from 'axios'
 
-const api = axios.create ({
-    baseURL: "",
-});
+//axios({
+//    method: 'get',
+//    baseURL: "",
+//    data:{
+//        login: '' 
+//    },
+//    headers:{
+//        token: ''
+//    },
+//}).then(data=>{
+//    data.data
+//}).catch(err=>{
 
-export default api;
+//}).finally()
