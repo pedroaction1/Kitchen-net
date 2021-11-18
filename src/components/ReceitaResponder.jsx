@@ -5,6 +5,7 @@ import {Card,Button,Icon,TextArea,Form,Input,Image,Segment, List} from 'semantic
 import logo from '../logo3.png'
 
 export default (props)=> {
+
     return(
         <>
             <Card style={{width:"100%"}}>
@@ -19,17 +20,17 @@ export default (props)=> {
                 <Card.Content>
                     <Form>
                         <strong>Título:</strong>
-                    <TextArea size='medium' style={{ minHeight: 45, maxHeight: 45}} />
-                    <strong>Autor:</strong> é dinamico <br />
-                    <strong>Sobre:</strong> <TextareaAutosize minRows={1} maxRows={2}/>
-                    <strong>Data:</strong> <Input type='date' placeholder='Data...'/>
-                    <strong>Porções:</strong> <Input type='number' size='small' />
+                    <TextArea size='medium' style={{ minHeight: 45, maxHeight: 45}} defaultValue={props.Titulo} />
+                    <strong>Autor:</strong> {props.Autor}é dinamico <br />
+                    <strong>Sobre:</strong> <TextareaAutosize minRows={1} maxRows={2} defaultValue={props.Sobre}/>
+                    <strong>Data:</strong> <Input type='date' placeholder='Data...' defaultValue={props.data}/>
+                    <strong>Porções:</strong> <Input type='number' size='small' defaultValue={props.porcoes} />
                     </Form>
                     <strong>Mídia Principal:</strong><br />
                     <Segment basic fluid textAlign='center'>
                         <Image
                             size='small'    
-                            src={logo}
+                            src={props.Image}
                         />
                     </Segment>
                     <br />
@@ -45,8 +46,6 @@ export default (props)=> {
                         <Card.Content>
                             <Card.Header style={{ color: "white"}}>1 <Image size='tiny' src={logo}/> Passo número 1</Card.Header>
                         </Card.Content>
-                    </Card>
-                    <Card fluid style={{ backgroundColor: "#e24333"}}>
                         <Card.Content>  
                              <Card.Header style={{color: "white"}} textAlign="center">Adicionar Etapa <Icon name="plus"/></Card.Header>
                         </Card.Content>

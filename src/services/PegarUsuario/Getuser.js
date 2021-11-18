@@ -1,8 +1,8 @@
-import axios from 'axios'
+//import axios from 'axios'
 
 //axios({
 //    method: 'get',
-//    baseURL: "",
+//    url: "../../api/apiRest/services/SearchUser",
 //    data:{
 //        login: '' 
 //    },
@@ -11,6 +11,4 @@ import axios from 'axios'
 //    },
 //}).then(data=>{
 //    data.data
-//}).catch(err=>{
-
-//}).finally()
+//})

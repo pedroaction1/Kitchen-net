@@ -2,11 +2,13 @@ import '../pages/paginaprincipal.css';
 import React, { useState } from 'react';
 import {Card,Button,Image,Confirm} from 'semantic-ui-react';
 import {data} from 'jquery'
+import ReceitaResponder from './ReceitaResponder';
 
 export default (props)=> {
 
     const [show,setShow] = useState(true);
     const [confirmar, setConfirmar] = useState("");
+    const [receita, setReceita] = useState(false);
 
     function ConfirmarHandler(){
         let data = {content: "", header: ""}
@@ -37,6 +39,17 @@ export default (props)=> {
         )
     }
 
+    function GetRecipeBig(){
+        console.log("antes")
+        console.log(receita);
+        if( receita == true ){
+            return(
+                console.log("depois"),
+                <ReceitaResponder Titulo={props.Titulo}/>
+            )
+        }
+    }
+
     return(
         (show)?
         (
@@ -51,15 +64,16 @@ export default (props)=> {
                     <Card.Header textAlign="center" style={{marginTop:"45px"}}> {props.Titulo}</Card.Header>
                 </Card.Content>
                 <Card.Content>
-                    <Button basic color="blue" fluid>Visualizar</Button>
-                  <Button.Group fluid style={{marginTop:"10px"}}> 
-                    <Button basic color="green" onClick={()=>{setConfirmar("Confirmar")}}>Aprovar</Button>
-                    <Button basic color="red" onClick={()=>{setConfirmar("Reprovar")}}>Reprovar</Button>
+                    <Button basic color="blue" fluid onClick={()=> {{setReceita(true)} {GetRecipeBig()}} }>Visualizar</Button>
+                  <Button.Group size ='small' floated='right' style={{marginTop:"10px"}}> 
+                    <Button  color="green" onClick={()=>{setConfirmar("Confirmar")}}>Aprovar</Button>
+                    <Button  color="red" onClick={()=>{setConfirmar("Reprovar")}}>Reprovar</Button>
                   </Button.Group> 
                 </Card.Content>
             </Card>
 
             {ConfirmarHandler()}
+            {GetRecipeBig()}
         </>)
         :
         null
