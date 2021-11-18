@@ -27,6 +27,9 @@ export default (props)=> {
     {
       "Titulo": "Queijadinha Perfeita",
       "Imagem": ''+ img2 +''
+    },
+    {
+      "Titulo": "Pica de Queijo Crocante"
     }
   ]
 

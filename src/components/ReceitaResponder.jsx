@@ -6,13 +6,19 @@ import logo from '../logo3.png'
 
 export default (props)=> {
 
+    const [show, setShow] = useState(true);
+    const [confirmar, setConfirmar] = useState("");
+    const [receita, setReceita] = useState(false);
+
     return(
+        (show)?
+        (
         <>
             <Card style={{width:"100%"}}>
                 <Card.Content style={{ backgroundColor:"#e24333"}}>
                     <Card.Header style={{color:'white'}}>
                         <Icon name='angle left' style={{marginTop:'12px'}}/>
-                        Voltar
+                        <Button>Voltar</Button>
                         <Button style={{ border: "1px solid black", backgroundColor: "#ba1b1d", color: "white"}} floated='right'size='tiny' >Reprovar</Button>
                         <Button style={{ border: "1px solid black"}} floated='right'size='tiny' color="green">Aprovar</Button>
                     </Card.Header>
@@ -52,6 +58,8 @@ export default (props)=> {
                     </Card>
                 </Card.Content>
             </Card>
-        </>
+        </>)
+        :
+        null
     )
 }

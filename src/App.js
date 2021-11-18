@@ -3,7 +3,7 @@ import './App.css';
 import { Link,Redirect, useHistory} from 'react-router-dom';
 import React, { useState } from 'react';
 import {Button} from 'semantic-ui-react';
-import pegaruser from './services/PegarUsuario/Getuser'
+import pegaruser, { cu } from './services/PegarUsuario/Getuser'
 import 'react-router-dom';
 
 function Login(props) {
@@ -12,19 +12,14 @@ function Login(props) {
   const [ username, setUsername] = useState("");
   const [path,setPath] = useState();
   const history = useHistory();
-    
+  
+  
   function Logar(){
-    
-    if(username == "moderador@gmail.com"){
-      history.push("/pages/pagina")
-    }
-    else if(username == "curador@gmail.com"){
-      history.push("/pages/paginaprincipal")
-      //<Link to=""></Link>
-    }
-    else {
-      console.log("bruh");
-
+    localStorage.getItem("token")
+    console.log(cu(username,password));
+    if(cu(username,password)){
+      console.log("cu")
+      history.push('./pages/pagina')
     }
   }  
 
@@ -54,7 +49,7 @@ function Login(props) {
               </div>
               <label className='GoodLabel' ><strong>Senha:</strong></label>
               <div>
-                <input placeholder='Senha' type="password" name="senha" id="senha" {...password}  onChange={(e)=>{setPassword(e.target.value)}}  className='input'></input>
+                <input placeholder='Senha' type="password" name="senha" id="senha"  onChange={(e)=>{setPassword(e.target.value)}}  className='input'></input>
               </div>
 
           </div>

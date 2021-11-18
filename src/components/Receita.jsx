@@ -40,11 +40,8 @@ export default (props)=> {
     }
 
     function GetRecipeBig(){
-        console.log("antes")
-        console.log(receita);
         if( receita == true ){
             return(
-                console.log("depois"),
                 <ReceitaResponder Titulo={props.Titulo}/>
             )
         }
@@ -64,7 +61,7 @@ export default (props)=> {
                     <Card.Header textAlign="center" style={{marginTop:"45px"}}> {props.Titulo}</Card.Header>
                 </Card.Content>
                 <Card.Content>
-                    <Button basic color="blue" fluid onClick={()=> {{setReceita(true)} {GetRecipeBig()}} }>Visualizar</Button>
+                    <Button basic color="blue" fluid onClick={()=> {{setReceita(!receita)} {GetRecipeBig()}} }>Visualizar</Button>
                   <Button.Group size ='small' floated='right' style={{marginTop:"10px"}}> 
                     <Button  color="green" onClick={()=>{setConfirmar("Confirmar")}}>Aprovar</Button>
                     <Button  color="red" onClick={()=>{setConfirmar("Reprovar")}}>Reprovar</Button>
