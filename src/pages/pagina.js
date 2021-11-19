@@ -8,7 +8,7 @@ import Receita from '../components/Receita';
 import ReceitaResponder from '../components/ReceitaResponder';
 import DenunciaResponder from '../components/DenunciaResponder';
 import Denuncia from '../components/Denuncia'; 
-import { Grid, Segment, Header, List, Icon, GridColumn,Menu, Label, StepContent} from 'semantic-ui-react';
+import { Grid, Segment, Header, List, Icon, GridColumn,Menu, Label, Loader,Dimmer} from 'semantic-ui-react';
 import DenunciaRespondida from '../components/DenunciaRespondida';
 import { render } from '@testing-library/react';
 import axios from "axios"
@@ -30,7 +30,8 @@ export default (props)=> {
       }
     })
     .then(response=>{
-      setDenuncia(response.data);
+      console.log(response.data.data);
+      setDenuncia(response.data.data);
     })
     .catch(err=>{
       console.log("deu pau :3");
@@ -79,7 +80,24 @@ export default (props)=> {
         </Menu>
       </Grid.Column>
       <Grid.Column width="8" style={{margin:"auto"}}>
-        {console.log(denuncia)}
+        {denuncia?
+        
+        (
+          denuncia.map(item=>{
+            if(item.Comment_author){return <Denuncia Autor={item.Comment_author}/>}
+            else {return <Denuncia Autor={item.Playlist_author}/>}
+          })
+        )
+
+        : (
+          <Segment style={{height:"200px"}} floated>
+            <Dimmer inverted active>
+              <Loader>
+                Carregando
+              </Loader>
+            </Dimmer>
+          </Segment>
+        )}
       </Grid.Column>
     </Grid>
 

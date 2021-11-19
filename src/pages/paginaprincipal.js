@@ -13,11 +13,26 @@ import DenunciaRespondida from '../components/DenunciaRespondida';
 import { render } from '@testing-library/react';
 import img1 from '../tempImgs/pao-de-queijo-mineiro-nr.jpg'
 import img2 from '../tempImgs/queijadinha.jpg'
+import axios from 'axios';
 
 export default (props)=> {
 
   const [numero,setNumero] = useState(0);
+  const [receita, setReceita] = useState({});
 
+  useEffect(()=> {
+    axios({
+      method: 'GET',
+      baseURL: 'https://5734-187-21-180-6.ngrok.io/recipe',
+      headers: {
+        'token': localStorage.getItem("token")
+      }
+    })
+    .then(response =>{
+      console.log(response.data.data)
+      setReceita(response.data.data)
+    })
+   })
 
   const data = [
     {

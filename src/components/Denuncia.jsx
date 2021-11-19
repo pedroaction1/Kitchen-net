@@ -48,11 +48,10 @@ export default (props)=> {
         <>
             <Card style={{width:"100%"}}>
                 <Card.Content key={props.Id}>
-                    <Card.Header>receita: {props.Receita}</Card.Header>
-                    <Card.Header>Autor: {props.Autor}</Card.Header>
+                    <Card.Meta>Remetente: {props.Autor}</Card.Meta>
                     <Card.Meta>Razão de denúncia: {props.Razao}</Card.Meta>
                     <Card.Description>
-                        {props.Tipo} denunciado: {props.Denuncia}
+                        E-mail do denunciado: {props.Denunciado}
                     </Card.Description>
                 </Card.Content>
                 <Card.Content>
