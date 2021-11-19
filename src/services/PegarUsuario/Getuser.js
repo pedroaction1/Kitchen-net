@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { data } from 'jquery'
 
 export async function cu(username,password){
    const response = await axios({
@@ -8,7 +9,10 @@ export async function cu(username,password){
             login: username,
             password: password
         }
+       
     })
 
-    return response.data
+    localStorage.setItem("token",response.data.token);
+    localStorage.setItem("tipo",response.data.type);
+    localStorage.setItem("valido",response.data.validated)
 }

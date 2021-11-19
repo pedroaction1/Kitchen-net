@@ -4,6 +4,7 @@ import { Link,Redirect, useHistory} from 'react-router-dom';
 import React, { useState } from 'react';
 import {Button} from 'semantic-ui-react';
 import pegaruser, { cu } from './services/PegarUsuario/Getuser'
+import axios from 'axios'
 import 'react-router-dom';
 
 function Login(props) {
@@ -14,13 +15,31 @@ function Login(props) {
   const history = useHistory();
   
   
-  function Logar(){
-    localStorage.getItem("token")
-    console.log(cu(username,password));
-    if(cu(username,password)){
-      console.log("cu")
-      history.push('./pages/pagina')
-    }
+  async function Logar(){
+    axios({
+      method: 'post',
+      baseURL: 'https://5734-187-21-180-6.ngrok.io/validate',
+      data:{
+        "login": username,
+        "password": password
+      },
+    })
+    .then(data=>{
+      localStorage.setItem("token", data.data.token)
+      localStorage.setItem("valido", data.data.validated)
+      localStorage.setItem("tipo", data.data.type)
+      localStorage.setItem("Nome", data.data.name)
+
+      if (localStorage.getItem("tipo") == 4)
+      {
+          history.push('./pages/pagina')
+      }else if (localStorage.getItem("tipo") == 3){
+          history.push('./pages/paginaprincipal')
+      }else{
+        console.log("ih deu erro!")
+      }
+
+    })
   }  
 
   return (
