@@ -2,11 +2,37 @@ import '../pages/paginaprincipal.css';
 import React, { useEffect, useState } from 'react';
 import {Card,Button,Confirm} from 'semantic-ui-react';
 import { data } from 'jquery';
+import axios from 'axios';
 
 export default (props)=> {
     
     const [show,setShow] = useState(true);
     const [confirm,setConfirm] = useState("");
+    const url = { "https://e067-2804-18-8c1-877e-d0c2-a42d-cdd2-a916.ngrok.io/complaint/approve/": props.Id}
+
+    function MandarBanco() {
+        if(confirm == "approve"){
+
+            axios({
+                method: "PUT",
+                baseURL: { "https://e067-2804-18-8c1-877e-d0c2-a42d-cdd2-a916.ngrok.io/complaint/approve/": props.Id},
+                headers: {
+                    'token': localStorage.getItem("token")
+                }
+            })
+            .then(response=>{
+                console.log("deu bom");
+            })
+            .catch(err=>{
+                console.log(err);
+                console.log(url);
+                console.log(props.Id);
+            })
+        }
+        else{
+
+        }
+    }
 
     function ConfirmHandler() {
         
@@ -29,7 +55,7 @@ export default (props)=> {
             <Confirm
                 open={confirm!=""}
                 onCancel={()=>{setConfirm("")}}
-                onConfirm={()=>{setConfirm("");setShow(false);}}
+                onConfirm={()=>{MandarBanco();setConfirm("");setShow(false);}}
                 content={data.content}
                 header={data.header}
                 cancelButton="Cancelar"

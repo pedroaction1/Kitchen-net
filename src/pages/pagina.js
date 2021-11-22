@@ -19,11 +19,14 @@ export default (props)=> {
   const [active,setActive] = useState("pendentes");
   const [usuario, setUsuario] = useState("denuncia");
   const [denuncia,setDenuncia] = useState();
-  
+
   useEffect(()=> {
     axios({
-      method: "GET",
-      baseURL: "https://5734-187-21-180-6.ngrok.io/complaint/not_viewed",
+      method: "POST",
+      baseURL: "https://e067-2804-18-8c1-877e-d0c2-a42d-cdd2-a916.ngrok.io/complaint/not_viewed",
+      data: {
+        'page': 0
+      },
       headers: {
         'token': localStorage.getItem("token")
       }
@@ -98,6 +101,7 @@ export default (props)=> {
             </Dimmer>
           </Segment>
         )}
+
       </Grid.Column>
     </Grid>
 

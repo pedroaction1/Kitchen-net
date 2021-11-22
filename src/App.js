@@ -18,7 +18,7 @@ function Login(props) {
   async function Logar(){
     axios({
       method: 'post',
-      baseURL: 'https://5734-187-21-180-6.ngrok.io/validate',
+      baseURL: 'https://e067-2804-18-8c1-877e-d0c2-a42d-cdd2-a916.ngrok.io/validate',
       data:{
         "login": username,
         "password": password

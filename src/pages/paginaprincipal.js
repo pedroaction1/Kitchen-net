@@ -23,17 +23,17 @@ export default (props)=> {
    useEffect(()=> {
     axios({
       method: "GET",
-      baseURL: "https://5734-187-21-180-6.ngrok.io/pendingrecipes",
+      baseURL: "https://e067-2804-18-8c1-877e-d0c2-a42d-cdd2-a916.ngrok.io/pendingrecipes",
       headers: {
         'token': localStorage.getItem("token")
       }
     })
     .then(response=>{
-      console.log(response.data.data);
+      console.log(response);
       setReceita(response.data.data);
     })
     .catch(err=>{
-      console.log("deu pau :3");
+      console.log(err);
     })
   },[])
 
