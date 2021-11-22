@@ -8,7 +8,7 @@ import Receita from '../components/Receita';
 import ReceitaResponder from '../components/ReceitaResponder';
 import DenunciaResponder from '../components/DenunciaResponder';
 import Denuncia from '../components/Denuncia'; 
-import { Grid, Segment, Header, List, Icon, GridColumn,Menu, Label} from 'semantic-ui-react';
+import {Grid,Segment,Header,List,Icon,GridColumn,Menu,Label,Dimmer,Loader} from 'semantic-ui-react';
 import DenunciaRespondida from '../components/DenunciaRespondida';
 import { render } from '@testing-library/react';
 import img1 from '../tempImgs/pao-de-queijo-mineiro-nr.jpg'
@@ -18,62 +18,25 @@ import axios from 'axios';
 export default (props)=> {
 
   const [numero,setNumero] = useState(0);
-  const [receita, setReceita] = useState({});
+  const [receita, setReceita] = useState();
 
-  useEffect(()=> {
+   useEffect(()=> {
     axios({
-      method: 'GET',
-      baseURL: 'https://5734-187-21-180-6.ngrok.io/recipe',
+      method: "GET",
+      baseURL: "https://5734-187-21-180-6.ngrok.io/pendingrecipes",
       headers: {
         'token': localStorage.getItem("token")
       }
     })
-    .then(response =>{
-      console.log(response.data.data)
-      setReceita(response.data.data)
+    .then(response=>{
+      console.log(response.data.data);
+      setReceita(response.data.data);
     })
-   })
+    .catch(err=>{
+      console.log("deu pau :3");
+    })
+  },[])
 
-  const data = [
-    {
-      "Titulo": "Pão de Queijo Crocante",
-      "Imagem": ''+ img1 +''
-    },
-    {
-      "Titulo": "Queijadinha Perfeita",
-      "Imagem": ''+ img2 +''
-    },
-    {
-      "Titulo": "Pica de Queijo Crocante"
-    }
-  ]
-
-  const dataRes = [
-    {
-      "Título": "Pão de Queijo Crocante",
-      "Autor": "",
-      "Sobre": "",
-      "Data": "",
-      "Porcoes": "",
-      "Midia": "",
-      "Ingrediente": "",
-
-    }
-  ]
-
-  function MonstrarReceita(){
-    return (
-      data.map(item=>{
-        return(
-          <Receita Imagem={item.Imagem} Titulo={item.Titulo}/>
-        )
-      })
-    )
-  }
-
-  const handleLogout = () => {
-    props.history.push('/App');
-  }
   const [active,setActive] = useState("pendentes");
 
   return (
@@ -110,7 +73,28 @@ export default (props)=> {
         </Menu>
       </Grid.Column>
       <Grid.Column width="8" style={{margin:"auto"}}>
-        {MonstrarReceita()}
+        {receita?
+        (
+          receita.map(item=>{
+            if(active=="pendente"){
+              if(item.Comment_author){return <Receita/>}
+              else {return <Receita/>}
+            }else{
+              if(item.Comment_author){return <Receita/>}
+            }
+          })
+
+        )
+
+        : (
+          <Segment style={{height:"200px"}} floated>
+            <Dimmer inverted active>
+              <Loader>
+                Carregando
+              </Loader>
+            </Dimmer>
+          </Segment>
+        )}
       </Grid.Column>
     </Grid>
 

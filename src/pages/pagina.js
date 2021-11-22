@@ -18,7 +18,6 @@ export default (props)=> {
 
   const [active,setActive] = useState("pendentes");
   const [usuario, setUsuario] = useState("denuncia");
-
   const [denuncia,setDenuncia] = useState();
   
   useEffect(()=> {
@@ -56,7 +55,7 @@ export default (props)=> {
       </div>
 
       <div style={{display:"flex",alignItems:"center",flexDirection:"column",marginLeft:"auto",marginRight:"5%"}}>
-        <Header as="h4" style={{color:"white"}}>logado como: {localStorage.getItem("Nome")}</Header>
+        <Header as="h4" style={{color:"white"}}>logado como: {}</Header>
         <div className="NavLinks">
             <Link to="#" style={{color:"white",marginLeft:"20px"}}>
               Altera senha
@@ -81,12 +80,13 @@ export default (props)=> {
       </Grid.Column>
       <Grid.Column width="8" style={{margin:"auto"}}>
         {denuncia?
-        
+
         (
           denuncia.map(item=>{
-            if(item.Comment_author){return <Denuncia Autor={item.Comment_author}/>}
-            else {return <Denuncia Autor={item.Playlist_author}/>}
+            if(item.Comment_author){return <Denuncia Autor={item.Comment_author} Razao={item.Complaint_type} Denunciado={item.Sender} Conteudo={item.Complaint}/>}
+            else {return <Denuncia Autor={item.Playlist_author} Razao={item.Complaint_type} Denunciado={item.Sender} Conteudo={item.Complaint}/>}
           })
+        
         )
 
         : (

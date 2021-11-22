@@ -39,7 +39,6 @@ export default (props)=> {
     }
     useEffect(()=>{
         return ()=>{
-            console.log("oi")
         }
     })
     return(
@@ -53,6 +52,8 @@ export default (props)=> {
                     <Card.Description>
                         E-mail do denunciado: {props.Denunciado}
                     </Card.Description>
+                    <br />
+                    <p> Denunciado: {props.Conteudo}</p>
                 </Card.Content>
                 <Card.Content>
                     <Button.Group size='medium' floated='right'>

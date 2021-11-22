@@ -28,7 +28,6 @@ function Login(props) {
       localStorage.setItem("token", data.data.token)
       localStorage.setItem("valido", data.data.validated)
       localStorage.setItem("tipo", data.data.type)
-      localStorage.setItem("Nome", data.data.name)
 
       if (localStorage.getItem("tipo") == 4)
       {
