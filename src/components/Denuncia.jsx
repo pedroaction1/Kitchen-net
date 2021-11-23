@@ -9,14 +9,12 @@ export default (props)=> {
     const [show,setShow] = useState(true);
     const [confirm,setConfirm] = useState("");
 
-    console.log(localStorage.getItem("token"));
-
     function MandarBanco(id, destino) {
         if(confirm == "approve"){
 
             axios({
                 method: "PUT",
-                baseURL: "https://e067-2804-18-8c1-877e-d0c2-a42d-cdd2-a916.ngrok.io/complaint/approve/" + id,
+                baseURL: "https://e067-2804-18-8c1-877e-d0c2-a42d-cdd2-a916.ngrok.io/api/complaint/approve/" + id,
                 headers: {
                     'token': localStorage.getItem("token"),
                 },
@@ -35,7 +33,7 @@ export default (props)=> {
         else{
             axios({
                 method: "PUT",
-                baseURL: "https://e067-2804-18-8c1-877e-d0c2-a42d-cdd2-a916.ngrok.io/complaint/decline/" + id,
+                baseURL: "https://e067-2804-18-8c1-877e-d0c2-a42d-cdd2-a916.ngrok.io/api/complaint/decline/" + id,
                 headers: {
                     'token': localStorage.getItem("token"),
                 },

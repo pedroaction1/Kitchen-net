@@ -25,12 +25,11 @@ export default (props)=> {
                 </Card.Content>
                 <Card.Content>
                     <Form>
-                        <strong>Título:</strong>
-                    <TextArea size='medium' style={{ minHeight: 45, maxHeight: 45}} defaultValue={props.Titulo} /> <br />
-                    <strong>Autor:</strong> {props.Autor} <br />
-                    <strong>Sobre:</strong> {props.Sobre} <br />
-                    <strong>Data:</strong> <Input type='date' placeholder='Data...' defaultValue={props.data}/>
-                    <strong>Porções:</strong> <Input type='number' size='small' defaultValue={props.porcoes} />
+                        <strong>Título:</strong> {props.Titulo} <br />
+                        <strong>Autor:</strong> {props.Autor} <br />
+                        <strong>Sobre:</strong> {props.Sobre} <br />
+                        <strong>Data:</strong> <Input type='date' placeholder='Data...' defaultValue={props.data}/>
+                        <strong>Porções:</strong> {props.porcoes} <br />
                     </Form>
                     <strong>Mídia Principal:</strong><br />
                     <Segment basic fluid textAlign='center'>

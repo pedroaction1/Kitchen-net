@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import {Card,Button,Image,Confirm} from 'semantic-ui-react';
 import {data} from 'jquery'
 import ReceitaResponder from './ReceitaResponder';
+import axios from 'axios';
 
 export default (props)=> {
 
@@ -10,10 +11,47 @@ export default (props)=> {
     const [confirmar, setConfirmar] = useState("");
     const [receita, setReceita] = useState(false);
     const [vendo, setVendo] = useState(false);
-    var View;
 
-    if(!vendo){
-        console.log(vendo);
+    function MandarBanco(id, destino) {
+        if(confirmar == "approve"){
+
+            axios({
+                method: "PUT",
+                baseURL: "https://e067-2804-18-8c1-877e-d0c2-a42d-cdd2-a916.ngrok.io/complaint/approve/" + id,
+                headers: {
+                    'token': localStorage.getItem("token"),
+                },
+                data: {
+                    'sender': destino
+                }
+            })
+            .then(response=>{
+                console.log(response);
+                console.log(destino);
+            })
+            .catch(err=>{
+                console.log(err);
+            })
+        }
+        else{
+            axios({
+                method: "PUT",
+                baseURL: "https://e067-2804-18-8c1-877e-d0c2-a42d-cdd2-a916.ngrok.io/complaint/decline/" + id,
+                headers: {
+                    'token': localStorage.getItem("token"),
+                },
+                data: {
+                    'sender': destino
+                }
+            })
+            .then(response=>{
+                console.log(response);
+                console.log(destino);
+            })
+            .catch(err=>{
+                console.log(err);
+            })
+        }
     }
 
     function ConfirmarHandler(){
@@ -49,7 +87,7 @@ export default (props)=> {
 
         if( receita == true ){
             return(
-                <ReceitaResponder Titulo={props.Titulo} Autor={props.Autor} Sobre={props.Sobre} porcoes={props.Porcao} />
+                <ReceitaResponder Titulo={props.Titulo} Autor={props.Autor} Sobre={props.Sobre} porcoes={props.Porcao}  />
             )
         }
     }
@@ -68,7 +106,14 @@ export default (props)=> {
                     <Card.Header textAlign="center" style={{marginTop:"45px"}}> {props.Titulo}</Card.Header>
                 </Card.Content>
                 <Card.Content>
-                    <Button basic color="blue" fluid onClick={()=> {{setReceita(!receita);setVendo(!vendo)} {GetRecipeBig()}} }> {View} </Button>
+                    {(vendo)?
+                    (
+                        <Button basic color="blue" fluid onClick={()=> {{setReceita(!receita); setVendo(!vendo)} {GetRecipeBig()}} }>Minimizar</Button>
+
+                    )
+                    :
+                        <Button basic color="blue" fluid onClick={()=> {{setReceita(!receita); setVendo(!vendo)} {GetRecipeBig()}} }>Expandir</Button>
+                    }
                   <Button.Group size ='small' floated='right' style={{marginTop:"10px"}}> 
                     <Button  color="green" onClick={()=>{setConfirmar("Confirmar")}}>Aprovar</Button>
                     <Button  color="red" onClick={()=>{setConfirmar("Reprovar")}}>Reprovar</Button>
@@ -76,7 +121,7 @@ export default (props)=> {
                 </Card.Content>
             </Card>
 
-            <div style={{display: "none"}}>{props.Sobre} {props.Autor} {props.Porcao}  </div>
+            <div style={{display: "none"}}>{props.Sobre} {props.Autor} {props.Porcao} {props.Ingredientes} </div>
             {ConfirmarHandler()}
             {GetRecipeBig()}
         </>)

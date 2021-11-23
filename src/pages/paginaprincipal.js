@@ -18,13 +18,12 @@ import axios from 'axios';
 export default (props)=> {
 
   const [active,setActive] = useState("pendentes");
-  const [numero,setNumero] = useState(0);
   const [receita, setReceita] = useState();
 
   useEffect(()=> {
     axios({
       method: "POST",
-      baseURL: "https://e067-2804-18-8c1-877e-d0c2-a42d-cdd2-a916.ngrok.io/pendingrecipes",
+      baseURL: "https://e067-2804-18-8c1-877e-d0c2-a42d-cdd2-a916.ngrok.io/api/pendingrecipes",
       data:{
         'page': 0
       },
@@ -33,6 +32,7 @@ export default (props)=> {
       }
     })
     .then(response=>{
+      console.log(response.data);
       setReceita(response.data);
     })
     .catch(err=>{
@@ -77,7 +77,7 @@ export default (props)=> {
         {receita?
         (
           receita.map(item=>{
-           if (item.Author != null){return <Receita Titulo={item.Name} Sobre={item.Description} Autor={item.Author} Porcao={item.Portions} />}
+           if (item.Author != null){return <Receita Titulo={item.Name} Sobre={item.Description} Autor={item.Author} Porcao={item.Portions} Ingredientes={item.Dumb_igredients} />}
           })
 
         )
