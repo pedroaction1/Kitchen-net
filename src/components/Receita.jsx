@@ -82,7 +82,7 @@ export default (props)=> {
 
         if( receita == true ){
             return(
-                <ReceitaResponder Titulo={props.Titulo} Autor={props.Autor} Sobre={props.Sobre} porcoes={props.Porcao}  />
+                <ReceitaResponder Titulo={props.Titulo} Autor={props.Autor} Sobre={props.Sobre} porcoes={props.Porcao} Ingredientes={props.Ingredientes} />
             )
         }
     }

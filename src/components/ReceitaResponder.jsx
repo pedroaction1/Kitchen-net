@@ -1,8 +1,9 @@
 import '../pages/paginaprincipal.css';
 import React, { useState } from 'react';
 import TextareaAutosize from "react-textarea-autosize";
-import {Card,Button,Icon,Form,Input,Image,Segment,List,Confirm} from 'semantic-ui-react';
+import {Card,Button,Icon,Form,Input,Image,Segment,List,Confirm,Dimmer} from 'semantic-ui-react';
 import logo from '../logo3.png'
+import Ingredientes from './Ingredientes';
 import axios from 'axios'
 
 export default (props)=> {
@@ -10,6 +11,12 @@ export default (props)=> {
     const [show, setShow] = useState(true);
     const [confirmar, setConfirmar] = useState("");
     const [receita, setReceita] = useState(false);
+
+    function ChamarTabela(){
+        return(
+        <Ingredientes/>
+        )
+    }
 
     function MandarBanco(id, autor) {
         if(confirmar == "approve"){
@@ -82,6 +89,7 @@ export default (props)=> {
         (show)?
         (
         <>
+        <Dimmer                                                                                                >
             <Card style={{width:"100%"}}>
                 <Card.Content style={{ backgroundColor:"#e24333"}}>
                     <Card.Header style={{color:'white'}}>
@@ -107,14 +115,14 @@ export default (props)=> {
                         />
                     </Segment>
                     <br />
-                    <strong>Ingredientes:</strong> é dinamico
+                    <strong>Ingredientes:</strong>
                     <List bulleted>
-                        <List.Item><strong>2 fatias de Pão</strong></List.Item>
+
                     </List>
                     <br />
                     <br />
-                    <Button fluid  onClick={()=>{}} style={{ backgroundColor: "#e24333", color: "white"}}>Editar Ingrediente</Button>
-                    <strong>Etapas:</strong> é dinamico
+                    <Button fluid  onClick={()=>{ChamarTabela()}} style={{ backgroundColor: "#e24333", color: "white"}}>Editar Ingrediente</Button>
+                    <strong>Etapas:</strong>
                     <Card fluid style={{ backgroundColor: "#e24333"}}>
                         <Card.Content>
                             <Card.Header style={{ color: "white"}}>1 <Image size='tiny' src={logo}/> Passo número 1</Card.Header>
@@ -125,7 +133,7 @@ export default (props)=> {
                     </Card>
                 </Card.Content>
             </Card>
-
+            </Dimmer>
             {ConfirmarHandler()}
         </>)
         :
