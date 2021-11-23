@@ -8,25 +8,26 @@ export default (props)=> {
     
     const [show,setShow] = useState(true);
     const [confirm,setConfirm] = useState("");
-    const url = { "https://e067-2804-18-8c1-877e-d0c2-a42d-cdd2-a916.ngrok.io/complaint/approve/": props.Id}
+    const teste = "https://e067-2804-18-8c1-877e-d0c2-a42d-cdd2-a916.ngrok.io/complaint/approve/:";
 
-    function MandarBanco() {
+    function MandarBanco(id, destino) {
         if(confirm == "approve"){
 
             axios({
                 method: "PUT",
-                baseURL: { "https://e067-2804-18-8c1-877e-d0c2-a42d-cdd2-a916.ngrok.io/complaint/approve/": props.Id},
+                baseURL: teste + id,
                 headers: {
-                    'token': localStorage.getItem("token")
+                    'token': localStorage.getItem("token"),
+                    'remetente': destino
                 }
             })
             .then(response=>{
+                console.log(response);
                 console.log("deu bom");
+                console.log(destino);
             })
             .catch(err=>{
                 console.log(err);
-                console.log(url);
-                console.log(props.Id);
             })
         }
         else{
@@ -55,7 +56,7 @@ export default (props)=> {
             <Confirm
                 open={confirm!=""}
                 onCancel={()=>{setConfirm("")}}
-                onConfirm={()=>{MandarBanco();setConfirm("");setShow(false);}}
+                onConfirm={()=>{MandarBanco(props.Id, props.Denunciado);setConfirm("");setShow(false);}}
                 content={data.content}
                 header={data.header}
                 cancelButton="Cancelar"
@@ -67,12 +68,13 @@ export default (props)=> {
         return ()=>{
         }
     })
+
     return(
         (show)?
         (
         <>
-            <Card style={{width:"100%"}}>
-                <Card.Content key={props.Id}>
+            <Card key={props.Id} style={{width:"100%"}}>
+                <Card.Content >
                     <Card.Meta>Remetente: {props.Autor}</Card.Meta>
                     <Card.Meta>Razão de denúncia: {props.Razao}</Card.Meta>
                     <Card.Description>
