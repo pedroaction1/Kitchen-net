@@ -9,6 +9,12 @@ export default (props)=> {
     const [show,setShow] = useState(true);
     const [confirmar, setConfirmar] = useState("");
     const [receita, setReceita] = useState(false);
+    const [vendo, setVendo] = useState(false);
+    var View;
+
+    if(!vendo){
+        console.log(vendo);
+    }
 
     function ConfirmarHandler(){
         let data = {content: "", header: ""}
@@ -40,9 +46,10 @@ export default (props)=> {
     }
 
     function GetRecipeBig(){
+
         if( receita == true ){
             return(
-                <ReceitaResponder Titulo={props.Titulo}/>
+                <ReceitaResponder Titulo={props.Titulo} Autor={props.Autor} Sobre={props.Sobre} porcoes={props.Porcao} />
             )
         }
     }
@@ -61,7 +68,7 @@ export default (props)=> {
                     <Card.Header textAlign="center" style={{marginTop:"45px"}}> {props.Titulo}</Card.Header>
                 </Card.Content>
                 <Card.Content>
-                    <Button basic color="blue" fluid onClick={()=> {{setReceita(!receita)} {GetRecipeBig()}} }>Visualizar</Button>
+                    <Button basic color="blue" fluid onClick={()=> {{setReceita(!receita);setVendo(!vendo)} {GetRecipeBig()}} }> {View} </Button>
                   <Button.Group size ='small' floated='right' style={{marginTop:"10px"}}> 
                     <Button  color="green" onClick={()=>{setConfirmar("Confirmar")}}>Aprovar</Button>
                     <Button  color="red" onClick={()=>{setConfirmar("Reprovar")}}>Reprovar</Button>
@@ -69,6 +76,7 @@ export default (props)=> {
                 </Card.Content>
             </Card>
 
+            <div style={{display: "none"}}>{props.Sobre} {props.Autor} {props.Porcao}  </div>
             {ConfirmarHandler()}
             {GetRecipeBig()}
         </>)

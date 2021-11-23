@@ -8,22 +8,24 @@ export default (props)=> {
     
     const [show,setShow] = useState(true);
     const [confirm,setConfirm] = useState("");
-    const teste = "https://e067-2804-18-8c1-877e-d0c2-a42d-cdd2-a916.ngrok.io/complaint/approve/:";
+
+    console.log(localStorage.getItem("token"));
 
     function MandarBanco(id, destino) {
         if(confirm == "approve"){
 
             axios({
                 method: "PUT",
-                baseURL: teste + id,
+                baseURL: "https://e067-2804-18-8c1-877e-d0c2-a42d-cdd2-a916.ngrok.io/complaint/approve/" + id,
                 headers: {
                     'token': localStorage.getItem("token"),
-                    'remetente': destino
+                },
+                data: {
+                    'sender': destino
                 }
             })
             .then(response=>{
                 console.log(response);
-                console.log("deu bom");
                 console.log(destino);
             })
             .catch(err=>{
@@ -31,7 +33,23 @@ export default (props)=> {
             })
         }
         else{
-
+            axios({
+                method: "PUT",
+                baseURL: "https://e067-2804-18-8c1-877e-d0c2-a42d-cdd2-a916.ngrok.io/complaint/decline/" + id,
+                headers: {
+                    'token': localStorage.getItem("token"),
+                },
+                data: {
+                    'sender': destino
+                }
+            })
+            .then(response=>{
+                console.log(response);
+                console.log(destino);
+            })
+            .catch(err=>{
+                console.log(err);
+            })
         }
     }
 

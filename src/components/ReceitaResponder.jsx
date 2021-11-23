@@ -18,7 +18,7 @@ export default (props)=> {
                 <Card.Content style={{ backgroundColor:"#e24333"}}>
                     <Card.Header style={{color:'white'}}>
                         <Icon name='angle left' style={{marginTop:'12px'}}/>
-                        <Button>Voltar</Button>
+                        Voltar
                         <Button style={{ border: "1px solid black", backgroundColor: "#ba1b1d", color: "white"}} floated='right'size='tiny' >Reprovar</Button>
                         <Button style={{ border: "1px solid black"}} floated='right'size='tiny' color="green">Aprovar</Button>
                     </Card.Header>
@@ -26,9 +26,9 @@ export default (props)=> {
                 <Card.Content>
                     <Form>
                         <strong>Título:</strong>
-                    <TextArea size='medium' style={{ minHeight: 45, maxHeight: 45}} defaultValue={props.Titulo} />
-                    <strong>Autor:</strong> {props.Autor}é dinamico <br />
-                    <strong>Sobre:</strong> <TextareaAutosize minRows={1} maxRows={2} defaultValue={props.Sobre}/>
+                    <TextArea size='medium' style={{ minHeight: 45, maxHeight: 45}} defaultValue={props.Titulo} /> <br />
+                    <strong>Autor:</strong> {props.Autor} <br />
+                    <strong>Sobre:</strong> {props.Sobre} <br />
                     <strong>Data:</strong> <Input type='date' placeholder='Data...' defaultValue={props.data}/>
                     <strong>Porções:</strong> <Input type='number' size='small' defaultValue={props.porcoes} />
                     </Form>
