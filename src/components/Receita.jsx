@@ -12,22 +12,21 @@ export default (props)=> {
     const [receita, setReceita] = useState(false);
     const [vendo, setVendo] = useState(false);
 
-    function MandarBanco(id, destino) {
+    function MandarBanco(id, autor) {
         if(confirmar == "approve"){
 
             axios({
                 method: "PUT",
-                baseURL: "https://e067-2804-18-8c1-877e-d0c2-a42d-cdd2-a916.ngrok.io/complaint/approve/" + id,
+                baseURL: "https://e067-2804-18-8c1-877e-d0c2-a42d-cdd2-a916.ngrok.io/api/recipe/" + id + "/" + autor + "/approve",
                 headers: {
                     'token': localStorage.getItem("token"),
                 },
                 data: {
-                    'sender': destino
+
                 }
             })
             .then(response=>{
                 console.log(response);
-                console.log(destino);
             })
             .catch(err=>{
                 console.log(err);
@@ -36,17 +35,13 @@ export default (props)=> {
         else{
             axios({
                 method: "PUT",
-                baseURL: "https://e067-2804-18-8c1-877e-d0c2-a42d-cdd2-a916.ngrok.io/complaint/decline/" + id,
+                baseURL: "https://e067-2804-18-8c1-877e-d0c2-a42d-cdd2-a916.ngrok.io/api/" + id + "/" + autor + "/decline",
                 headers: {
                     'token': localStorage.getItem("token"),
-                },
-                data: {
-                    'sender': destino
                 }
             })
             .then(response=>{
                 console.log(response);
-                console.log(destino);
             })
             .catch(err=>{
                 console.log(err);
@@ -74,7 +69,7 @@ export default (props)=> {
             <Confirm
                 open={confirmar!=""}
                 onCancel={()=> setConfirmar("")}
-                onConfirm={()=> {setConfirmar("");setShow(false)}}
+                onConfirm={()=> {MandarBanco(props.Id, props.Autor);setConfirmar("");setShow(false)}}
                 content={data.content}
                 header={data.header}
                 cancelButton="Cancelar"
@@ -96,7 +91,7 @@ export default (props)=> {
         (show)?
         (
         <>
-            <Card style={{width:"100%"}}>
+            <Card key={props.Id} style={{width:"100%"}}>
                 <Card.Content>
                     <Image
                         floated='left'

@@ -1,14 +1,82 @@
 import '../pages/paginaprincipal.css';
 import React, { useState } from 'react';
 import TextareaAutosize from "react-textarea-autosize";
-import {Card,Button,Icon,TextArea,Form,Input,Image,Segment, List} from 'semantic-ui-react';
+import {Card,Button,Icon,Form,Input,Image,Segment,List,Confirm} from 'semantic-ui-react';
 import logo from '../logo3.png'
+import axios from 'axios'
 
 export default (props)=> {
 
     const [show, setShow] = useState(true);
     const [confirmar, setConfirmar] = useState("");
     const [receita, setReceita] = useState(false);
+
+    function MandarBanco(id, autor) {
+        if(confirmar == "approve"){
+
+            axios({
+                method: "PUT",
+                baseURL: "https://e067-2804-18-8c1-877e-d0c2-a42d-cdd2-a916.ngrok.io/api/recipe/" + id + "/" + autor + "/approve",
+                headers: {
+                    'token': localStorage.getItem("token"),
+                },
+                data: {
+
+                }
+            })
+            .then(response=>{
+                console.log(response);
+            })
+            .catch(err=>{
+                console.log(err);
+            })
+        }
+        else{
+            axios({
+                method: "PUT",
+                baseURL: "https://e067-2804-18-8c1-877e-d0c2-a42d-cdd2-a916.ngrok.io/api/" + id + "/" + autor + "/decline",
+                headers: {
+                    'token': localStorage.getItem("token"),
+                }
+            })
+            .then(response=>{
+                console.log(response);
+            })
+            .catch(err=>{
+                console.log(err);
+            })
+        }
+    }
+
+    function ConfirmarHandler(){
+        let data = {content: "", header: ""}
+
+        if(confirmar == "approve"){
+            data = {
+                content: "Você tem certeza que deseja aprovar esta receita?",
+                header: "Confirmar Receita"
+            }
+        }
+        else{
+            data = {
+                content: "Você tem certeza que deseja rejeitar essa receita?",
+                header: "Rejeitar Receita"
+            }
+        }
+
+        return(
+            <Confirm
+                open={confirmar!=""}
+                onCancel={()=> setConfirmar("")}
+                onConfirm={()=> {MandarBanco(props.Id, props.Autor);setConfirmar("");setShow(false)}}
+                content={data.content}
+                header={data.header}
+                cancelButton="Cancelar"
+                confirmButton="Sim"
+            />
+        )
+    }
+
 
     return(
         (show)?
@@ -19,8 +87,8 @@ export default (props)=> {
                     <Card.Header style={{color:'white'}}>
                         <Icon name='angle left' style={{marginTop:'12px'}}/>
                         Voltar
-                        <Button style={{ border: "1px solid black", backgroundColor: "#ba1b1d", color: "white"}} floated='right'size='tiny' >Reprovar</Button>
-                        <Button style={{ border: "1px solid black"}} floated='right'size='tiny' color="green">Aprovar</Button>
+                        <Button onClick={()=>{setConfirmar("decline")}} style={{ border: "1px solid black", backgroundColor: "#ba1b1d", color: "white"}} floated='right'size='tiny' >Reprovar</Button>
+                        <Button  onClick={()=>{setConfirmar("approve")}} style={{ border: "1px solid black"}} floated='right'size='tiny' color="green">Aprovar</Button>
                     </Card.Header>
                 </Card.Content>
                 <Card.Content>
@@ -45,7 +113,7 @@ export default (props)=> {
                     </List>
                     <br />
                     <br />
-                    <Button fluid style={{ backgroundColor: "#e24333", color: "white"}}>Editar Ingrediente</Button>
+                    <Button fluid  onClick={()=>{}} style={{ backgroundColor: "#e24333", color: "white"}}>Editar Ingrediente</Button>
                     <strong>Etapas:</strong> é dinamico
                     <Card fluid style={{ backgroundColor: "#e24333"}}>
                         <Card.Content>
@@ -57,6 +125,8 @@ export default (props)=> {
                     </Card>
                 </Card.Content>
             </Card>
+
+            {ConfirmarHandler()}
         </>)
         :
         null

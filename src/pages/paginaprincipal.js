@@ -77,7 +77,7 @@ export default (props)=> {
         {receita?
         (
           receita.map(item=>{
-           if (item.Author != null){return <Receita Titulo={item.Name} Sobre={item.Description} Autor={item.Author} Porcao={item.Portions} Ingredientes={item.Dumb_igredients} />}
+           if (item.Author != null){return <Receita  Id={item.Id} Titulo={item.Name} Sobre={item.Description} Autor={item.Author} Porcao={item.Portions} Ingredientes={item.Dumb_igredients} />}
           })
 
         )
