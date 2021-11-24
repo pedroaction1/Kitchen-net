@@ -11,6 +11,8 @@ export default (props)=> {
     const [show, setShow] = useState(true);
     const [confirmar, setConfirmar] = useState("");
     const [receita, setReceita] = useState(false);
+    var coisa = props.Ingredientes
+    var Ingredientepuro;
 
     function ChamarTabela(){
         return(
@@ -89,14 +91,10 @@ export default (props)=> {
         (show)?
         (
         <>
-        <Dimmer                                                                                                >
-            <Card style={{width:"100%"}}>
+            <Card style={{width:"100%",fontSize:"15px"}}>
                 <Card.Content style={{ backgroundColor:"#e24333"}}>
-                    <Card.Header style={{color:'white'}}>
-                        <Icon name='angle left' style={{marginTop:'12px'}}/>
-                        Voltar
-                        <Button onClick={()=>{setConfirmar("decline")}} style={{ border: "1px solid black", backgroundColor: "#ba1b1d", color: "white"}} floated='right'size='tiny' >Reprovar</Button>
-                        <Button  onClick={()=>{setConfirmar("approve")}} style={{ border: "1px solid black"}} floated='right'size='tiny' color="green">Aprovar</Button>
+                    <Card.Header textAlign="center" style={{color:'white'}}>
+                        Receita: {props.Titulo}
                     </Card.Header>
                 </Card.Content>
                 <Card.Content>
@@ -104,7 +102,6 @@ export default (props)=> {
                         <strong>Título:</strong> {props.Titulo} <br />
                         <strong>Autor:</strong> {props.Autor} <br />
                         <strong>Sobre:</strong> {props.Sobre} <br />
-                        <strong>Data:</strong> <Input type='date' placeholder='Data...' defaultValue={props.data}/>
                         <strong>Porções:</strong> {props.porcoes} <br />
                     </Form>
                     <strong>Mídia Principal:</strong><br />
@@ -117,7 +114,13 @@ export default (props)=> {
                     <br />
                     <strong>Ingredientes:</strong>
                     <List bulleted>
-
+                        {coisa = coisa.split("|"), coisa = coisa.slice(1, coisa.length - 1), coisa.map(item=>{
+                            item = item.replace(/,/g, ' ');
+                            console.log(item);
+                            return (
+                                <List.Item> {item} </List.Item>
+                            )
+                        })}
                     </List>
                     <br />
                     <br />
@@ -133,7 +136,6 @@ export default (props)=> {
                     </Card>
                 </Card.Content>
             </Card>
-            </Dimmer>
             {ConfirmarHandler()}
         </>)
         :

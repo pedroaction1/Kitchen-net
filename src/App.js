@@ -14,7 +14,26 @@ function Login(props) {
   const [path,setPath] = useState();
   const history = useHistory();
   
-  
+  function RodarReceita(){
+      axios({
+        method: 'post',
+        baseURL: 'https://e067-2804-18-8c1-877e-d0c2-a42d-cdd2-a916.ngrok.io/api/recipe',
+        data:{
+          "name":"chup chup de leite condensado",
+          "description":"chup chup gostoso para você si deliciar",
+          "portions": 10,
+          "difficulty": 1,
+          "recommended_level": 1,
+          "categories": [],
+          "igredients": "|leite condensado,395,g de|leite,1,litro|",
+          "steps": []
+        },
+        headers:{
+          'token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImhlbnJpcXVlQGdtYWlsLmNvbSIsImlhdCI6MTYzNzcxNTAxMywiZXhwIjoxNjM3NzQzODEzfQ.DxN8hfQg9p8RV4WHtdtqBZQhvDQjsBo0W3LicbZDYq8"
+        }
+      })
+  }
+
   async function Logar(){
     axios({
       method: 'post',
@@ -76,6 +95,8 @@ function Login(props) {
               
               <Button color="red" onClick={()=>{Logar()}}>Login</Button>           
   
+              <Button onClick={()=>{RodarReceita()}}>Rodar Receita</Button>
+
           </div>
 
           <h5>Esqueci a Senha</h5>

@@ -16,13 +16,13 @@ export default (props)=> {
         if(confirmar == "approve"){
 
             axios({
-                method: "PUT",
+                method: "POST",
                 baseURL: "https://e067-2804-18-8c1-877e-d0c2-a42d-cdd2-a916.ngrok.io/api/recipe/" + id + "/" + autor + "/approve",
                 headers: {
                     'token': localStorage.getItem("token"),
                 },
                 data: {
-
+                    'igredients': "45 ml de leite"
                 }
             })
             .then(response=>{
@@ -34,7 +34,7 @@ export default (props)=> {
         }
         else{
             axios({
-                method: "PUT",
+                method: "POST",
                 baseURL: "https://e067-2804-18-8c1-877e-d0c2-a42d-cdd2-a916.ngrok.io/api/" + id + "/" + autor + "/decline",
                 headers: {
                     'token': localStorage.getItem("token"),
@@ -116,7 +116,7 @@ export default (props)=> {
                 </Card.Content>
             </Card>
 
-            <div style={{display: "none"}}>{props.Sobre} {props.Autor} {props.Porcao} {props.Ingredientes} </div>
+            <div style={{display: "none"}}>{props.Sobre} {props.Autor} {props.Porcao} {props.Ingredientes} {props.Image} </div>
             {ConfirmarHandler()}
             {GetRecipeBig()}
         </>)
