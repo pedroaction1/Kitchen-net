@@ -12,6 +12,7 @@ function Login(props) {
   const [ password, setPassword ] = useState("");
   const [ username, setUsername] = useState("");
   const [path,setPath] = useState();
+  const [incorreto, setIncorreto] = useState();
   const history = useHistory();
   
   function RodarReceita(){
@@ -29,7 +30,7 @@ function Login(props) {
           "steps": []
         },
         headers:{
-          'token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImhlbnJpcXVlQGdtYWlsLmNvbSIsImlhdCI6MTYzNzcxNTAxMywiZXhwIjoxNjM3NzQzODEzfQ.DxN8hfQg9p8RV4WHtdtqBZQhvDQjsBo0W3LicbZDYq8"
+          'token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImhlbnJpcXVlQGdtYWlsLmNvbSIsImlhdCI6MTYzNzc2MzY1MCwiZXhwIjoxNjM3NzkyNDUwfQ.7BnqeYokBxOe2AH2U06ircqYCRX2aDsYH5Ff3f2EUyw"
         }
       })
   }
@@ -54,7 +55,8 @@ function Login(props) {
       }else if (localStorage.getItem("tipo") == 3){
           history.push('./pages/paginaprincipal')
       }else{
-        console.log("ih deu erro!")
+        console.log("Login Incorreto!");
+        setIncorreto(true);
       }
 
     })

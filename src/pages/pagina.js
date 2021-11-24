@@ -81,7 +81,7 @@ export default (props)=> {
           </Menu.Item>
         </Menu>
       </Grid.Column>
-      <Grid.Column width="8" style={{margin:"auto"}}>
+      <Grid.Column width={8} style={{margin:"auto"}}>
         {denuncia?
 
         (

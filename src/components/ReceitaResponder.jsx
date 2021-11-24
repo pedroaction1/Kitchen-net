@@ -9,83 +9,14 @@ import axios from 'axios'
 export default (props)=> {
 
     const [show, setShow] = useState(true);
-    const [confirmar, setConfirmar] = useState("");
-    const [receita, setReceita] = useState(false);
     var coisa = props.Ingredientes
-    var Ingredientepuro;
+    var temp;
 
     function ChamarTabela(){
         return(
         <Ingredientes/>
         )
     }
-
-    function MandarBanco(id, autor) {
-        if(confirmar == "approve"){
-
-            axios({
-                method: "PUT",
-                baseURL: "https://e067-2804-18-8c1-877e-d0c2-a42d-cdd2-a916.ngrok.io/api/recipe/" + id + "/" + autor + "/approve",
-                headers: {
-                    'token': localStorage.getItem("token"),
-                },
-                data: {
-
-                }
-            })
-            .then(response=>{
-                console.log(response);
-            })
-            .catch(err=>{
-                console.log(err);
-            })
-        }
-        else{
-            axios({
-                method: "PUT",
-                baseURL: "https://e067-2804-18-8c1-877e-d0c2-a42d-cdd2-a916.ngrok.io/api/" + id + "/" + autor + "/decline",
-                headers: {
-                    'token': localStorage.getItem("token"),
-                }
-            })
-            .then(response=>{
-                console.log(response);
-            })
-            .catch(err=>{
-                console.log(err);
-            })
-        }
-    }
-
-    function ConfirmarHandler(){
-        let data = {content: "", header: ""}
-
-        if(confirmar == "approve"){
-            data = {
-                content: "Você tem certeza que deseja aprovar esta receita?",
-                header: "Confirmar Receita"
-            }
-        }
-        else{
-            data = {
-                content: "Você tem certeza que deseja rejeitar essa receita?",
-                header: "Rejeitar Receita"
-            }
-        }
-
-        return(
-            <Confirm
-                open={confirmar!=""}
-                onCancel={()=> setConfirmar("")}
-                onConfirm={()=> {MandarBanco(props.Id, props.Autor);setConfirmar("");setShow(false)}}
-                content={data.content}
-                header={data.header}
-                cancelButton="Cancelar"
-                confirmButton="Sim"
-            />
-        )
-    }
-
 
     return(
         (show)?
@@ -115,10 +46,13 @@ export default (props)=> {
                     <strong>Ingredientes:</strong>
                     <List bulleted>
                         {coisa = coisa.split("|"), coisa = coisa.slice(1, coisa.length - 1), coisa.map(item=>{
-                            item = item.replace(/,/g, ' ');
-                            console.log(item);
+                            item = item.split(",")
+                            temp = item[0];
+                            item[0] = item[1];
+                            item[1] = item[2];
+                            item[2] = temp;
                             return (
-                                <List.Item> {item} </List.Item>
+                                <List.Item> {item[0] + item[1] + " " + item[2]} </List.Item>
                             )
                         })}
                     </List>
@@ -130,13 +64,9 @@ export default (props)=> {
                         <Card.Content>
                             <Card.Header style={{ color: "white"}}>1 <Image size='tiny' src={logo}/> Passo número 1</Card.Header>
                         </Card.Content>
-                        <Card.Content>  
-                             <Card.Header style={{color: "white"}} textAlign="center">Adicionar Etapa <Icon name="plus"/></Card.Header>
-                        </Card.Content>
                     </Card>
                 </Card.Content>
             </Card>
-            {ConfirmarHandler()}
         </>)
         :
         null
