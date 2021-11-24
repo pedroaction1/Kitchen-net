@@ -11,6 +11,7 @@ export default (props)=> {
     const [confirmar, setConfirmar] = useState("");
     const [receita, setReceita] = useState(false);
     const [vendo, setVendo] = useState(false);
+    const [conteudo, setConteudo] = useState();
 
     function MandarBanco(id, autor) {
         if(confirmar == "Confirmar"){
@@ -115,7 +116,7 @@ export default (props)=> {
                 </Card.Content>
             </Card>
 
-            <div style={{display: "none"}}>{props.Sobre} {props.Autor} {props.Porcao} {props.Ingredientes} {props.Image} </div>
+            <div style={{display: "none"}}>{props.Sobre} {props.Autor} {props.Porcao} {props.Ingredientes} {props.Image} {conteudo} </div>
             {ConfirmarHandler()}
             {GetRecipeBig()}
         </>)

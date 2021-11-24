@@ -6,9 +6,6 @@ import axios from 'axios';
 
 export default (props)=> {
 
-    
-    console.log("mas que cu");
-
     return(
         <>
             <Segment>

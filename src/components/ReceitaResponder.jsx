@@ -2,20 +2,27 @@ import '../pages/paginaprincipal.css';
 import React, { useState } from 'react';
 import TextareaAutosize from "react-textarea-autosize";
 import {Card,Button,Icon,Form,Input,Image,Segment,List,Confirm,Dimmer} from 'semantic-ui-react';
-import logo from '../logo3.png'
+import logo from '../logo3.png';
+import Receita from './Receita';
 import Ingredientes from './Ingredientes';
 import axios from 'axios'
+import { render } from '@testing-library/react';
 
 export default (props)=> {
 
     const [show, setShow] = useState(true);
+    const [tabela, setTabela] = useState(false);
     var coisa = props.Ingredientes
     var temp;
 
     function ChamarTabela(){
-        return(
-        <Ingredientes/>
-        )
+        console.log(tabela)
+        if(tabela == true)
+        {
+            return(
+            <Ingredientes/>
+            )
+        }
     }
 
     return(
@@ -58,7 +65,7 @@ export default (props)=> {
                     </List>
                     <br />
                     <br />
-                    <Button fluid  onClick={()=>{ChamarTabela()}} style={{ backgroundColor: "#e24333", color: "white"}}>Editar Ingrediente</Button>
+                    <Button fluid onClick={()=>{setTabela(!tabela);ChamarTabela()}} style={{ backgroundColor: "#e24333", color: "white"}}>Editar Ingrediente</Button>
                     <strong>Etapas:</strong>
                     <Card fluid style={{ backgroundColor: "#e24333"}}>
                         <Card.Content>
@@ -67,6 +74,7 @@ export default (props)=> {
                     </Card>
                 </Card.Content>
             </Card>
+            {ChamarTabela()}
         </>)
         :
         null
