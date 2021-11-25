@@ -8,7 +8,6 @@ export default (props)=> {
 
     const [abrir, setAbrir] = useState(false)
     const [Clicar, setClicar] = useState(true)
-    Clicar = props.Tabela
     console.log("bruh")
     console.log(Clicar)
 
