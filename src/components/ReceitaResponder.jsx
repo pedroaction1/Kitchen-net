@@ -1,25 +1,16 @@
 import '../pages/paginaprincipal.css';
 import React, { useState } from 'react';
-import {Card,Button,Icon,Form,Image,Segment,List} from 'semantic-ui-react';
+import {Card,Button,Icon,Form,Image,Segment,List,Modal,Header} from 'semantic-ui-react';
 import logo from '../logo3.png';
 import Receita from './Receita';
-import Ingredientes from './Ingredientes';
 
 export default (props)=> {
 
     const [show, setShow] = useState(true);
     const [tabela, setTabela] = useState(false);
+    const [abrir, setAbrir] = useState(false)
     var coisa = props.Ingredientes
     var temp;
-
-    function ChamarTabela(){
-        if(tabela == true)
-        {
-            return(
-            <Ingredientes Tabela={tabela} />
-            )
-        }
-    }
 
     return(
         (show)?
@@ -61,7 +52,36 @@ export default (props)=> {
                     </List>
                     <br />
                     <br />
-                    <Button fluid onClick={()=>{setTabela(!tabela);ChamarTabela()}} style={{ backgroundColor: "#e24333", color: "white"}}>Editar Ingrediente</Button>
+                    <Modal
+                    onClose={() => setAbrir(false)}
+                    onOpen={() => setAbrir(true)}
+                    open={abrir}
+                    trigger={<Button fluid onClick={()=>{setTabela(!tabela)}} style={{ backgroundColor: "#e24333", color: "white"}}>Editar Ingrediente</Button> }
+                    >
+                    <Modal.Header textAlign="center">Ingredientes</Modal.Header>
+                    <Modal.Content image>
+                        <Modal.Description>
+                        <Header>Default Profile Image</Header>
+                        <p>
+                            We've found the following gravatar image associated with your e-mail
+                            address.
+                        </p>
+                        <p>Is it okay to use this photo?</p>
+                        </Modal.Description>
+                    </Modal.Content>
+                    <Modal.Actions>
+                        <Button color='black' onClick={() => setAbrir(false)}>
+                        Nope
+                        </Button>
+                        <Button
+                        content="Yep, that's me"
+                        labelPosition='right'
+                        icon='checkmark'
+                        onClick={() => setAbrir(false)}
+                        positive
+                        />
+                    </Modal.Actions>
+                    </Modal>
                     <strong>Etapas:</strong>
                     <Card fluid style={{ backgroundColor: "#e24333"}}>
                         <Card.Content>
@@ -70,7 +90,6 @@ export default (props)=> {
                     </Card>
                 </Card.Content>
             </Card>
-            {ChamarTabela()}
         </>)
         :
         null

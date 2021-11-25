@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import {Card,Button,Confirm} from 'semantic-ui-react';
 import { data } from 'jquery';
 import axios from 'axios';
+import Rota from '../services/Rota';
 
 export default (props)=> {
     
@@ -14,7 +15,7 @@ export default (props)=> {
 
             axios({
                 method: "PUT",
-                baseURL: "https://0d55-2804-431-cfdd-ed07-a5dd-f273-bb7e-baaa.ngrok.io/api/complaint/approve/" + id,
+                baseURL: Rota + "api/complaint/approve/" + id,
                 headers: {
                     'token': localStorage.getItem("token"),
                 },
@@ -33,7 +34,7 @@ export default (props)=> {
         else{
             axios({
                 method: "PUT",
-                baseURL: "https://e067-2804-18-8c1-877e-d0c2-a42d-cdd2-a916.ngrok.io/api/complaint/decline/" + id,
+                baseURL: Rota + "api/complaint/decline/" + id,
                 headers: {
                     'token': localStorage.getItem("token"),
                 },

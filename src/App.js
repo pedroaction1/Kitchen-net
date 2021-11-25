@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import {Button} from 'semantic-ui-react';
 import axios from 'axios'
 import 'react-router-dom';
+import Rota from './services/Rota'
 
 function Login(props) {
 
@@ -15,9 +16,10 @@ function Login(props) {
   const history = useHistory();
   
   function RodarReceita(){
+
       axios({
         method: 'post',
-        baseURL: 'http://8316-2804-38a-a02b-7e15-b4d4-3da0-fda4-8794.ngrok.io/api/recipe',
+        baseURL: Rota + 'api/recipe',
         data:{
           "name":"Freddy",
           "description":"Receita do Freddy",
@@ -37,7 +39,7 @@ function Login(props) {
   async function Logar(){
     axios({
       method: 'post',
-      baseURL: 'http://8316-2804-38a-a02b-7e15-b4d4-3da0-fda4-8794.ngrok.io/api/validate',
+      baseURL: Rota + "api/validate",
       data:{
         "login": username,
         "password": password

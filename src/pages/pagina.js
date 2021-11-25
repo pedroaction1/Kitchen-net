@@ -28,7 +28,7 @@ export default (props)=> {
 
     axios({
       method: "POST",
-      baseURL: Rota + "complaint/not_viewed",
+      baseURL: Rota + "api/complaint/not_viewed",
       data: {
         'page': 0
       },
