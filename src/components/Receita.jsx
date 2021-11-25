@@ -111,8 +111,8 @@ export default (props)=> {
                     :
                         <Button basic color="blue" fluid onClick={()=> {{setReceita(!receita); setVendo(!vendo)} {GetRecipeBig()}} }>Expandir</Button>
                     }
-                    <Button  color="red" style={{marginTop:"10px",width:"30%"}} floated='center' onClick={()=>{setConfirmar("Reprovar")}}>Reprovar</Button>
-                    <Button  color="green" style={{marginTop:"10px",width:"30%"}} floated='center' onClick={()=>{setConfirmar("Confirmar")}}>Aprovar</Button>
+                    <Button  color="red" style={{marginTop:"10px",width:"30%"}} onClick={()=>{setConfirmar("Reprovar")}}>Reprovar</Button>
+                    <Button  color="green" style={{marginTop:"10px",width:"30%"}} onClick={()=>{setConfirmar("Confirmar")}}>Aprovar</Button>
                 </Card.Content>
             </Card>
 

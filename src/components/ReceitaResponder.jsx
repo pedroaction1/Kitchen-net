@@ -16,7 +16,7 @@ export default (props)=> {
         if(tabela == true)
         {
             return(
-            <Ingredientes active={true} />
+            <Ingredientes Tabela={tabela} />
             )
         }
     }
