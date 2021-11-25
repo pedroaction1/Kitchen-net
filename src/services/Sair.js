@@ -1,4 +1,4 @@
-export default (props) =>{
+export default () =>{
 
     function Sair(){
         localStorage.clear();

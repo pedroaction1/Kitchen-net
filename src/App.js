@@ -17,7 +17,7 @@ function Login(props) {
   function RodarReceita(){
       axios({
         method: 'post',
-        baseURL: 'https://0d55-2804-431-cfdd-ed07-a5dd-f273-bb7e-baaa.ngrok.io/api/recipe',
+        baseURL: 'http://8316-2804-38a-a02b-7e15-b4d4-3da0-fda4-8794.ngrok.io/api/recipe',
         data:{
           "name":"Freddy",
           "description":"Receita do Freddy",
@@ -37,7 +37,7 @@ function Login(props) {
   async function Logar(){
     axios({
       method: 'post',
-      baseURL: 'https://0d55-2804-431-cfdd-ed07-a5dd-f273-bb7e-baaa.ngrok.io/api/validate',
+      baseURL: 'http://8316-2804-38a-a02b-7e15-b4d4-3da0-fda4-8794.ngrok.io/api/validate',
       data:{
         "login": username,
         "password": password

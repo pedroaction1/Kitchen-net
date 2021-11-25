@@ -7,6 +7,7 @@ import './paginaprincipal.css';
 import Receita from '../components/Receita';
 import {Grid,Segment,Header,List,Icon,GridColumn,Menu,Label,Dimmer,Loader} from 'semantic-ui-react';
 import axios from 'axios';
+import Rota from '../services/Rota'
 
 export default (props)=> {
 
@@ -22,7 +23,7 @@ export default (props)=> {
   useEffect(()=> {
     axios({
       method: "POST",
-      baseURL: "https://0d55-2804-431-cfdd-ed07-a5dd-f273-bb7e-baaa.ngrok.io/api/pendingrecipes",
+      baseURL: Rota + "api/pendingrecipes",
       data:{
         'page': 0
       },

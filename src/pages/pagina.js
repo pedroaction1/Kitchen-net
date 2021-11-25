@@ -10,6 +10,7 @@ import DenunciaRespondida from '../components/DenunciaRespondida';
 import { render } from '@testing-library/react';
 import axios from "axios"
 import Sair from '../services/Sair'
+import Rota from '../services/Rota'
 
 
 export default (props)=> {
@@ -27,7 +28,7 @@ export default (props)=> {
 
     axios({
       method: "POST",
-      baseURL: "https://0d55-2804-431-cfdd-ed07-a5dd-f273-bb7e-baaa.ngrok.io/api/complaint/not_viewed",
+      baseURL: Rota + "complaint/not_viewed",
       data: {
         'page': 0
       },
