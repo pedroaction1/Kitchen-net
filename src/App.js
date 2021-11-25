@@ -1,18 +1,17 @@
 import logo from './logo3.png';
 import './App.css';
-import { Link,Redirect, useHistory} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import React, { useState } from 'react';
 import {Button} from 'semantic-ui-react';
-import pegaruser, { cu } from './services/PegarUsuario/Getuser'
 import axios from 'axios'
 import 'react-router-dom';
 
 function Login(props) {
 
+  localStorage.clear();
+
   const [ password, setPassword ] = useState("");
   const [ username, setUsername] = useState("");
-  const [path,setPath] = useState();
-  const [incorreto, setIncorreto] = useState();
   const history = useHistory();
   
   function RodarReceita(){
@@ -20,9 +19,9 @@ function Login(props) {
         method: 'post',
         baseURL: 'https://0d55-2804-431-cfdd-ed07-a5dd-f273-bb7e-baaa.ngrok.io/api/recipe',
         data:{
-          "name":"chup chup de leite condensado",
-          "description":"chup chup gostoso para você si deliciar",
-          "portions": 10,
+          "name":"Freddy",
+          "description":"Receita do Freddy",
+          "portions": 1,
           "difficulty": 1,
           "recommended_level": 1,
           "categories": [],
@@ -30,7 +29,7 @@ function Login(props) {
           "steps": []
         },
         headers:{
-          'token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImhlbnJpcXVlQGdtYWlsLmNvbSIsImlhdCI6MTYzNzc2MzY1MCwiZXhwIjoxNjM3NzkyNDUwfQ.7BnqeYokBxOe2AH2U06ircqYCRX2aDsYH5Ff3f2EUyw"
+          'token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImhlbnJpcXVlQGdtYWlsLmNvbSIsImlhdCI6MTYzNzgzOTY4NiwiZXhwIjoxNjM3ODY4NDg2fQ.OUrit38GAtKmt4wT-uvOe1jJ5q_JuGmXBMSWJZfewUo"
         }
       })
   }
@@ -56,7 +55,6 @@ function Login(props) {
           history.push('./pages/paginaprincipal')
       }else{
         console.log("Login Incorreto!");
-        setIncorreto(true);
       }
 
     })
@@ -68,7 +66,7 @@ function Login(props) {
         <div className="Container">
 
           <div>
-            <img src ={logo} className="Logo"></img>
+            <img src ={logo} className="Logo" alt="logo da Kitchen Net"></img>
           </div>
 
           <h3>

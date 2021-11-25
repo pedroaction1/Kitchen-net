@@ -1,12 +1,9 @@
 import '../pages/paginaprincipal.css';
 import React, { useState } from 'react';
-import TextareaAutosize from "react-textarea-autosize";
-import {Card,Button,Icon,Form,Input,Image,Segment,List,Confirm,Dimmer} from 'semantic-ui-react';
+import {Card,Button,Icon,Form,Image,Segment,List} from 'semantic-ui-react';
 import logo from '../logo3.png';
 import Receita from './Receita';
 import Ingredientes from './Ingredientes';
-import axios from 'axios'
-import { render } from '@testing-library/react';
 
 export default (props)=> {
 
@@ -16,11 +13,10 @@ export default (props)=> {
     var temp;
 
     function ChamarTabela(){
-        console.log(tabela)
         if(tabela == true)
         {
             return(
-            <Ingredientes/>
+            <Ingredientes active={true} />
             )
         }
     }

@@ -23,7 +23,7 @@ export default (props)=> {
                     'token': localStorage.getItem("token"),
                 },
                 data: {
-                    'igredients': "45 ml de leite"
+                    'igredients': ""
                 }
             })
             .then(response=>{

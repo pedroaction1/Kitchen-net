@@ -1,17 +1,15 @@
 import logo from '../logo3.png';
 import './paginaprincipal.css';
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import '../logo3.png';
 import './paginaprincipal.css';
-import Receita from '../components/Receita';
-import ReceitaResponder from '../components/ReceitaResponder';
-import DenunciaResponder from '../components/DenunciaResponder';
 import Denuncia from '../components/Denuncia'; 
-import { Grid, Segment, Header, List, Icon, GridColumn,Menu, Label, Loader,Dimmer} from 'semantic-ui-react';
+import { Grid,Segment, Header,Icon,GridColumn,Menu,Loader,Dimmer} from 'semantic-ui-react';
 import DenunciaRespondida from '../components/DenunciaRespondida';
 import { render } from '@testing-library/react';
 import axios from "axios"
+import Sair from '../services/Sair'
 
 
 export default (props)=> {
@@ -19,8 +17,14 @@ export default (props)=> {
   const [active,setActive] = useState("pendentes");
   const [usuario, setUsuario] = useState("denuncia");
   const [denuncia,setDenuncia] = useState();
+  const history = useHistory();
+  
+  if(localStorage.getItem("tipo") != 4){
+    history.goBack();
+  }
 
   useEffect(()=> {
+
     axios({
       method: "POST",
       baseURL: "https://0d55-2804-431-cfdd-ed07-a5dd-f273-bb7e-baaa.ngrok.io/api/complaint/not_viewed",
@@ -63,7 +67,7 @@ export default (props)=> {
             <Link to="#" style={{color:"white",marginLeft:"20px"}}>
               Altera senha
             </Link>       
-            <Link to="../" style={{color:"white",marginLeft:"20px"}} >
+            <Link onClick={Sair} to="../" style={{color:"white",marginLeft:"20px"}} >
               Sair
             </Link>   
         </div>

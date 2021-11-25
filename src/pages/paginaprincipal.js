@@ -1,24 +1,23 @@
 import logo from '../logo3.png';
 import './paginaprincipal.css';
 import React, { useState, useEffect} from 'react';
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import '../logo3.png';
 import './paginaprincipal.css';
 import Receita from '../components/Receita';
-import ReceitaResponder from '../components/ReceitaResponder';
-import DenunciaResponder from '../components/DenunciaResponder';
-import Denuncia from '../components/Denuncia'; 
 import {Grid,Segment,Header,List,Icon,GridColumn,Menu,Label,Dimmer,Loader} from 'semantic-ui-react';
-import DenunciaRespondida from '../components/DenunciaRespondida';
-import { render } from '@testing-library/react';
-import img1 from '../tempImgs/pao-de-queijo-mineiro-nr.jpg'
-import img2 from '../tempImgs/queijadinha.jpg'
 import axios from 'axios';
 
 export default (props)=> {
 
   const [active,setActive] = useState("pendentes");
   const [receita, setReceita] = useState();
+  const history = useHistory();
+  
+  if(localStorage.getItem("tipo") != 3){
+    history.goBack();
+  }
+
 
   useEffect(()=> {
     axios({
