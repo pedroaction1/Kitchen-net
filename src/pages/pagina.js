@@ -23,7 +23,7 @@ export default (props)=> {
   useEffect(()=> {
     axios({
       method: "POST",
-      baseURL: "https://e067-2804-18-8c1-877e-d0c2-a42d-cdd2-a916.ngrok.io/api/complaint/not_viewed",
+      baseURL: "https://0d55-2804-431-cfdd-ed07-a5dd-f273-bb7e-baaa.ngrok.io/api/complaint/not_viewed",
       data: {
         'page': 0
       },
