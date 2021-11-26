@@ -1,16 +1,39 @@
-import '../pages/paginaprincipal.css';
 import React, { useState } from 'react';
-import {Card,Button,Icon,Form,Image,Segment,List,Modal,Header} from 'semantic-ui-react';
+import {Card,Button,Icon,Form,Image,Segment,List,Modal,Header,Input,Dropdown, Grid} from 'semantic-ui-react';
 import logo from '../logo3.png';
 import Receita from './Receita';
+import axios from 'axios'
+import Rota from '../services/Rota';
 
 export default (props)=> {
 
-    const [show, setShow] = useState(true);
-    const [tabela, setTabela] = useState(false);
+
+    const [Opcoes, setOpcoes] = useState()
+    const [show, setShow] = useState(true)
     const [abrir, setAbrir] = useState(false)
     var coisa = props.Ingredientes
-    var temp;
+    var temp
+
+    function PuxarIngredientes(){
+        axios({
+            method: "GET",
+            baseURL: Rota + "api/searchigredient",
+            headers: {
+                'token': localStorage.getItem("token"),
+            },
+            data: {
+                'page':0,
+                'search': ""
+            }
+        })
+        .then(response=>{
+            console.log(response);
+            setOpcoes(response)
+        })
+        .catch(err=>{
+            console.log(err);
+        })
+    }
 
     return(
         (show)?
@@ -56,25 +79,48 @@ export default (props)=> {
                     onClose={() => setAbrir(false)}
                     onOpen={() => setAbrir(true)}
                     open={abrir}
-                    trigger={<Button fluid onClick={()=>{setTabela(!tabela)}} style={{ backgroundColor: "#e24333", color: "white"}}>Editar Ingrediente</Button> }
+                    trigger={<Button onClick={PuxarIngredientes()} fluid style={{ backgroundColor: "#e24333", color: "white"}}>Editar Ingrediente</Button> }
                     >
-                    <Modal.Header textAlign="center">Ingredientes</Modal.Header>
-                    <Modal.Content image>
+                    <Modal.Header  style={{backgroundColor:"#e24333",color:"white",textAlign:"center"}} textAlign="center">Ingredientes</Modal.Header>
+                    <Modal.Content style={{backgroundColor:"#e24333"}} image>
                         <Modal.Description>
-                        <Header>Default Profile Image</Header>
-                        <p>
-                            We've found the following gravatar image associated with your e-mail
-                            address.
-                        </p>
-                        <p>Is it okay to use this photo?</p>
+                        <Segment>
+                        <Grid columns='equal'>
+                            <Grid.Column width={8}>
+                                Nome dos Ingredientes: <br />
+                                {coisa.map(item=>{
+                                    item = item.split(",")
+                                    console.log(item[0])
+                                    return (
+                                        <Dropdown selection search fluid style={{marginTop:"2.5%"}} value={item[0]}/>
+                                    )
+                                })}
+                            </Grid.Column>
+                                
+                            <Grid.Column>
+                                Quantidade
+                                {coisa.map(item=>{
+                                    return (
+                                        <Input fluid style={{marginTop:"5%"}} content={item[2]}/>
+                                    )
+                                })}
+                            </Grid.Column>
+
+                            <Grid.Column>
+                                Medidas:
+                                {coisa.map(item=>{
+                                    return (
+                                        <Input fluid style={{marginTop:"5%"}} content={item[2]}/>
+                                    )
+                                })}
+                            </Grid.Column>
+                        </Grid>
+                        </Segment>
                         </Modal.Description>
                     </Modal.Content>
-                    <Modal.Actions>
-                        <Button color='black' onClick={() => setAbrir(false)}>
-                        Nope
-                        </Button>
+                    <Modal.Actions style={{backgroundColor:"#e24333",color:"white",textAlign:"center"}}>
                         <Button
-                        content="Yep, that's me"
+                        content="Salvar Ingredientes"
                         labelPosition='right'
                         icon='checkmark'
                         onClick={() => setAbrir(false)}

@@ -84,11 +84,11 @@ function Login(props) {
 
               <label className='GoodLabel' ><strong>Email:</strong></label>
               <div>
-                <input placeholder='Email'  type="email" name="email" id="email"  onChange={(e)=>{setUsername(e.target.value)}} className='input'></input>
+                <input placeholder='Email'  type="email" name="email" id="email"  onChange={(e)=>{setUsername(e.target.value)}} className='inputL'></input>
               </div>
               <label className='GoodLabel' ><strong>Senha:</strong></label>
               <div>
-                <input placeholder='Senha' type="password" name="senha" id="senha"  onChange={(e)=>{setPassword(e.target.value)}}  className='input'></input>
+                <input placeholder='Senha' type="password" name="senha" id="senha"  onChange={(e)=>{setPassword(e.target.value)}}  className='inputL'></input>
               </div>
 
           </div>
