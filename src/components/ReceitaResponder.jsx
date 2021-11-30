@@ -7,32 +7,33 @@ import Rota from '../services/Rota';
 
 export default (props)=> {
 
-
-    const [Opcoes, setOpcoes] = useState()
+    const [opcoes, setOpcoes] = useState()
+    const IngredientesOpcoes = opcoes
     const [show, setShow] = useState(true)
     const [abrir, setAbrir] = useState(false)
     var coisa = props.Ingredientes
     var temp
 
     function PuxarIngredientes(){
-        axios({
-            method: "GET",
-            baseURL: Rota + "api/searchigredient",
-            headers: {
-                'token': localStorage.getItem("token"),
-            },
-            data: {
-                'page':0,
-                'search': ""
-            }
-        })
-        .then(response=>{
-            console.log(response);
-            setOpcoes(response)
-        })
-        .catch(err=>{
-            console.log(err);
-        })
+        if(opcoes == null){
+            axios({
+                method: "POST",
+                baseURL: Rota + "api/searchigredient",
+                headers: {
+                    'token': localStorage.getItem("token"),
+                },
+                data: {
+                    'page':0,
+                    'search': ""
+                }
+            })
+            .then(response=>{
+                setOpcoes(response.data)
+            })
+            .catch(err=>{
+                console.log(err);
+            })
+        }
     }
 
     return(
@@ -88,13 +89,12 @@ export default (props)=> {
                         <Grid columns='equal'>
                             <Grid.Column width={8}>
                                 Nome dos Ingredientes: <br />
-                                {coisa.map(item=>{
-                                    item = item.split(",")
-                                    console.log(item[0])
-                                    return (
-                                        <Dropdown selection search fluid style={{marginTop:"2.5%"}} value={item[0]}/>
-                                    )
-                                })}
+                                {IngredientesOpcoes.map(item=>{
+                                    console.log(item.Name)
+                                })
+                                }
+                                
+                                <Dropdown selection search fluid options={IngredientesOpcoes} style={{marginTop:"2.5%"}} />
                             </Grid.Column>
                                 
                             <Grid.Column>

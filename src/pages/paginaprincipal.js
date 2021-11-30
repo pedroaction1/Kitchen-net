@@ -32,7 +32,6 @@ export default (props)=> {
       }
     })
     .then(response=>{
-      console.log(response.data);
       setReceita(response.data);
     })
     .catch(err=>{

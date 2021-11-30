@@ -15,7 +15,7 @@ import Rota from '../services/Rota'
 
 export default (props)=> {
 
-  const [active,setActive] = useState(true);
+  const [active,setActive] = useState();
   const [denuncia,setDenuncia] = useState();
   const history = useHistory();
   
@@ -24,6 +24,10 @@ export default (props)=> {
   }
 
   useEffect(()=>{
+    PuxarPendentes();
+  },[])
+
+  function PuxarPendentes(){
     axios({
       method: "POST",
       baseURL: Rota + "api/complaint/not_viewed",
@@ -35,13 +39,12 @@ export default (props)=> {
       }
     })
     .then(response=>{
-      console.log(response.data.data);
       setDenuncia(response.data.data);
     })
     .catch(err=>{
       console.log("deu pau :3");
     })
-  },[])
+  }
 
   function PuxarRespondidas() {
     axios({
@@ -55,7 +58,6 @@ export default (props)=> {
       }
     })
     .then(response=>{
-      console.log(response.data.data);
       setDenuncia(response.data.data);
     })
     .catch(err=>{
@@ -70,16 +72,16 @@ export default (props)=> {
 
         return(
           denuncia.map(item=>{
-            if(item.Comment_author){return <Denuncia Autor={item.Comment_author} Razao={item.Complaint_type} Denunciado={item.Sender} Conteudo={item.Complaint} Id={item.Id} Image={item.thumbnail}/>}
-            else {return <Denuncia Autor={item.Playlist_author} Razao={item.Complaint_type} Denunciado={item.Sender} Conteudo={item.Complaint} Id={item.Id} />}
+            if(item.Comment_author){return <Denuncia Autor={item.Sender} Razao={item.Complaint_type} Denunciado={item.Comment_author} Conteudo={item.Complaint} Id={item.Id} Image={item.thumbnail}/>}
+            else {return <Denuncia Autor={item.Sender} Razao={item.Complaint_type} Denunciado={item.Playlist_author} Conteudo={item.Complaint} Id={item.Id} />}
           })
         )
       }
       else{
         return(
           denuncia.map(item=>{
-            if(item.Comment_author){return <DenunciaRespondida Razao={item.Complaint} Status={item.Complaint_state} Data={item.data_of} />}
-            else {return <DenunciaRespondida/>}
+            if(item.Comment_author){return <DenunciaRespondida Razao={item.Complaint} Status={item.Complaint_state} Data={item.data_of} Autor={item.Sender} Denunciado={item.Comment_author} Conteudo={item.Complaint} Id={item.Id} Image={item.thumbnail}/>}
+            else {return <DenunciaRespondida Autor={item.Sender} Razao={item.Complaint_type} Denunciado={item.Playlist_author} Conteudo={item.Complaint} Id={item.Id}/>}
           })
         )
       }
@@ -123,10 +125,10 @@ export default (props)=> {
     <Grid style={{}}>
       <Grid.Column>
         <Menu vertical style={{marginLeft:"20px",padding:"1rem"}}>
-          <Menu.Item name="pendentes" active={active === "pendentes"} onClick={(e)=>{setActive(true)}}>
+          <Menu.Item name="pendentes" active={active === "pendentes"} onClick={(e)=>{setActive(true);PuxarPendentes();}}>
             Pendentes
           </Menu.Item>
-          <Menu.Item name="respondidas" active={active === "respondidas"} onClick={(e)=>{setActive(false);PuxarRespondidas()}}>
+          <Menu.Item name="respondidas" active={active === "respondidas"} onClick={(e)=>{setActive(false);PuxarRespondidas();}}>
             Respondidas
           </Menu.Item>
         </Menu>
