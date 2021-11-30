@@ -16,7 +16,6 @@ import Rota from '../services/Rota'
 export default (props)=> {
 
   const [active,setActive] = useState(true);
-  const [usuario, setUsuario] = useState("denuncia");
   const [denuncia,setDenuncia] = useState();
   const history = useHistory();
   
@@ -24,7 +23,7 @@ export default (props)=> {
     history.goBack();
   }
 
-  function PuxarNaoRespondidas(){
+  useEffect(()=>{
     axios({
       method: "POST",
       baseURL: Rota + "api/complaint/not_viewed",
@@ -42,17 +41,13 @@ export default (props)=> {
     .catch(err=>{
       console.log("deu pau :3");
     })
-  }
-
-  const handleLogout = () => {
-    props.history.push('/App');
-  }
+  },[])
 
   function PuxarRespondidas() {
     axios({
       method: "POST",
       baseURL: Rota + "api/complaint/viewed",
-      data: {
+      data:{
         'page': 0
       },
       headers: {
@@ -69,30 +64,37 @@ export default (props)=> {
   }
 
   function MostrarDenuncia(){
-    if(denuncia == true){
+    if(denuncia != null){
       
       if(active == true){
-        denuncia.map(item=>{
-          if(item.Comment_author){return <Denuncia Autor={item.Comment_author} Razao={item.Complaint_type} Denunciado={item.Sender} Conteudo={item.Complaint} Id={item.Id} Image={item.thumbnail}/>}
-          else {return <Denuncia Autor={item.Playlist_author} Razao={item.Complaint_type} Denunciado={item.Sender} Conteudo={item.Complaint} Id={item.Id} />}
-        })
+
+        return(
+          denuncia.map(item=>{
+            if(item.Comment_author){return <Denuncia Autor={item.Comment_author} Razao={item.Complaint_type} Denunciado={item.Sender} Conteudo={item.Complaint} Id={item.Id} Image={item.thumbnail}/>}
+            else {return <Denuncia Autor={item.Playlist_author} Razao={item.Complaint_type} Denunciado={item.Sender} Conteudo={item.Complaint} Id={item.Id} />}
+          })
+        )
       }
       else{
-        denuncia.map(item=>{
-          if(item.Comment_author){return <Denuncia Autor={item.Comment_author} Razao={item.Complaint_type} Denunciado={item.Sender} Conteudo={item.Complaint} Id={item.Id} Image={item.thumbnail}/>}
-          else {return <Denuncia Autor={item.Playlist_author} Razao={item.Complaint_type} Denunciado={item.Sender} Conteudo={item.Complaint} Id={item.Id} />}
-        })
+        return(
+          denuncia.map(item=>{
+            if(item.Comment_author){return <DenunciaRespondida Razao={item.Complaint} Status={item.Complaint_state} Data={item.data_of} />}
+            else {return <DenunciaRespondida/>}
+          })
+        )
       }
     }
     
     else{
+      return(
       <Segment style={{height:"200px"}} floated>
-      <Dimmer inverted active>
-        <Loader>
-          Carregando
-        </Loader>
-      </Dimmer>
-    </Segment>
+        <Dimmer inverted active>
+          <Loader>
+            Carregando
+          </Loader>
+        </Dimmer>
+      </Segment>
+      )
     }
   }
 
@@ -121,33 +123,16 @@ export default (props)=> {
     <Grid style={{}}>
       <Grid.Column>
         <Menu vertical style={{marginLeft:"20px",padding:"1rem"}}>
-          <Menu.Item name="pendentes" active={active === "pendentes"} onClick={(e)=>{setActive(true), PuxarNaoRespondidas()}}>
+          <Menu.Item name="pendentes" active={active === "pendentes"} onClick={(e)=>{setActive(true)}}>
             Pendentes
           </Menu.Item>
-          <Menu.Item name="respondidas" active={active === "respondidas"} onClick={(e)=>{setActive(false), PuxarRespondidas()}}>
+          <Menu.Item name="respondidas" active={active === "respondidas"} onClick={(e)=>{setActive(false);PuxarRespondidas()}}>
             Respondidas
           </Menu.Item>
         </Menu>
       </Grid.Column>
       <Grid.Column width={8} style={{margin:"auto"}}>
-        {denuncia?
-
-        (
-          denuncia.map(item=>{
-            if(item.Comment_author){return <Denuncia Autor={item.Comment_author} Razao={item.Complaint_type} Denunciado={item.Sender} Conteudo={item.Complaint} Id={item.Id} Image={item.thumbnail}/>}
-            else {return <Denuncia Autor={item.Playlist_author} Razao={item.Complaint_type} Denunciado={item.Sender} Conteudo={item.Complaint} Id={item.Id} />}
-          })
-        )
-
-        : (
-          <Segment style={{height:"200px"}} floated>
-            <Dimmer inverted active>
-              <Loader>
-                Carregando
-              </Loader>
-            </Dimmer>
-          </Segment>
-        )}
+        {MostrarDenuncia()}
 
       </Grid.Column>
     </Grid>
