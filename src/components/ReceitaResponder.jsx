@@ -5,7 +5,7 @@ import Receita from './Receita';
 import axios from 'axios'
 import Rota from '../services/Rota';
 
-export default (props)=> {
+export default (props, {childToParent})=> {
 
     const Medidas = [
         {
@@ -53,6 +53,7 @@ export default (props)=> {
     const [opcoes, setOpcoes] = useState()
     const [show, setShow] = useState(true)
     const [abrir, setAbrir] = useState(false)
+    const [data, setData] = useState("eu sinceramente não ligo se você é virgem");
     var coisa = props.Ingredientes
     let i = 0
     let nomeIngre;
@@ -62,6 +63,10 @@ export default (props)=> {
             text:  nomeIngre
         } 
         ]
+
+    function SetarIngredientes(){
+
+    }
 
     function PuxarIngredientes(){
         if(opcoes == null){
@@ -129,7 +134,7 @@ export default (props)=> {
                     onClose={() => setAbrir(false)}
                     onOpen={() => setAbrir(true)}
                     open={abrir}
-                    trigger={<Button onClick={PuxarIngredientes()} fluid style={{ backgroundColor: "#e24333", color: "white"}}>Editar Ingrediente</Button> }
+                    trigger={<Button onClick={(PuxarIngredientes()),() => childToParent(data)} fluid style={{ backgroundColor: "#e24333", color: "white"}}>Editar Ingrediente</Button> }
                     >
                     <Modal.Header  style={{backgroundColor:"#e24333",color:"white",textAlign:"center"}} textAlign="center">Ingredientes</Modal.Header>
                     <Modal.Content style={{backgroundColor:"#e24333"}} image>
@@ -162,7 +167,7 @@ export default (props)=> {
                                 Quantidade
                                 {coisa.map(item=>{
                                     return (
-                                        <Input fluid style={{marginTop:"5%"}} content={item[2]}/>
+                                        <Input fluid style={{marginTop:"5%"}}/>
                                     )
                                 })}
                             </Grid.Column>
@@ -171,7 +176,7 @@ export default (props)=> {
                                 Medidas:
                                 {coisa.map(item=>{
                                     return (
-                                        <Dropdown selection options={Medidas} fluid style={{marginTop:"5%"}} content={item[2]}/>
+                                        <Dropdown selection options={Medidas} fluid style={{marginTop:"5%"}} />
                                     )
                                 })}
                             </Grid.Column>
@@ -184,7 +189,7 @@ export default (props)=> {
                         content="Salvar Ingredientes"
                         labelPosition='right'
                         icon='checkmark'
-                        onClick={() => setAbrir(false)}
+                        onClick={() => setAbrir(false), SetarIngredientes()}
                         positive
                         />
                     </Modal.Actions>

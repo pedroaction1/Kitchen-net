@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import {Card,Button, CardContent} from 'semantic-ui-react';
 
 export default (props)=> {
-    
     return(
         <>        
             {/*<Card style={{width:"100%"}}>

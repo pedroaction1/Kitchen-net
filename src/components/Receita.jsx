@@ -12,7 +12,11 @@ export default (props)=> {
     const [confirmar, setConfirmar] = useState("");
     const [receita, setReceita] = useState(false);
     const [vendo, setVendo] = useState(false);
-    const [conteudo, setConteudo] = useState();
+    const [conteudo, setConteudo] = useState('');
+
+    const RespostadeIngrediente = (childdata) =>{
+        setConteudo(childdata);
+    }
 
     function MandarBanco(id, autor) {
         if(confirmar == "Confirmar"){
@@ -84,7 +88,7 @@ export default (props)=> {
 
         if( receita == true ){
             return(
-                <ReceitaResponder Titulo={props.Titulo} Autor={props.Autor} 
+                <ReceitaResponder childToParent={RespostadeIngrediente} Titulo={props.Titulo} Autor={props.Autor} 
                 Sobre={props.Sobre} porcoes={props.Porcao} Ingredientes={props.Ingredientes} />
             )
         }
