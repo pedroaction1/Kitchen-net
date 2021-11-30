@@ -15,7 +15,7 @@ import Rota from '../services/Rota'
 
 export default (props)=> {
 
-  const [active,setActive] = useState("pendentes");
+  const [active,setActive] = useState(true);
   const [usuario, setUsuario] = useState("denuncia");
   const [denuncia,setDenuncia] = useState();
   const history = useHistory();
@@ -24,8 +24,7 @@ export default (props)=> {
     history.goBack();
   }
 
-  useEffect(()=> {
-
+  function PuxarNaoRespondidas(){
     axios({
       method: "POST",
       baseURL: Rota + "api/complaint/not_viewed",
@@ -43,14 +42,58 @@ export default (props)=> {
     .catch(err=>{
       console.log("deu pau :3");
     })
-  },[])
+  }
 
   const handleLogout = () => {
     props.history.push('/App');
   }
 
-  function mostraDenuncia() {
+  function PuxarRespondidas() {
+    axios({
+      method: "POST",
+      baseURL: Rota + "api/complaint/viewed",
+      data: {
+        'page': 0
+      },
+      headers: {
+        'token': localStorage.getItem("token")
+      }
+    })
+    .then(response=>{
+      console.log(response.data.data);
+      setDenuncia(response.data.data);
+    })
+    .catch(err=>{
+      console.log("deu pau :3");
+    })
+  }
+
+  function MostrarDenuncia(){
+    if(denuncia == true){
+      
+      if(active == true){
+        denuncia.map(item=>{
+          if(item.Comment_author){return <Denuncia Autor={item.Comment_author} Razao={item.Complaint_type} Denunciado={item.Sender} Conteudo={item.Complaint} Id={item.Id} Image={item.thumbnail}/>}
+          else {return <Denuncia Autor={item.Playlist_author} Razao={item.Complaint_type} Denunciado={item.Sender} Conteudo={item.Complaint} Id={item.Id} />}
+        })
+      }
+      else{
+        denuncia.map(item=>{
+          if(item.Comment_author){return <Denuncia Autor={item.Comment_author} Razao={item.Complaint_type} Denunciado={item.Sender} Conteudo={item.Complaint} Id={item.Id} Image={item.thumbnail}/>}
+          else {return <Denuncia Autor={item.Playlist_author} Razao={item.Complaint_type} Denunciado={item.Sender} Conteudo={item.Complaint} Id={item.Id} />}
+        })
+      }
+    }
     
+    else{
+      <Segment style={{height:"200px"}} floated>
+      <Dimmer inverted active>
+        <Loader>
+          Carregando
+        </Loader>
+      </Dimmer>
+    </Segment>
+    }
   }
 
   return (
@@ -78,10 +121,10 @@ export default (props)=> {
     <Grid style={{}}>
       <Grid.Column>
         <Menu vertical style={{marginLeft:"20px",padding:"1rem"}}>
-          <Menu.Item name="pendentes" active={active === "pendentes"} onClick={(e)=>{setActive("pendentes")}}>
+          <Menu.Item name="pendentes" active={active === "pendentes"} onClick={(e)=>{setActive(true), PuxarNaoRespondidas()}}>
             Pendentes
           </Menu.Item>
-          <Menu.Item name="respondidas" active={active === "respondidas"} onClick={(e)=>{setActive("respondidas")}}>
+          <Menu.Item name="respondidas" active={active === "respondidas"} onClick={(e)=>{setActive(false), PuxarRespondidas()}}>
             Respondidas
           </Menu.Item>
         </Menu>
@@ -94,7 +137,6 @@ export default (props)=> {
             if(item.Comment_author){return <Denuncia Autor={item.Comment_author} Razao={item.Complaint_type} Denunciado={item.Sender} Conteudo={item.Complaint} Id={item.Id} Image={item.thumbnail}/>}
             else {return <Denuncia Autor={item.Playlist_author} Razao={item.Complaint_type} Denunciado={item.Sender} Conteudo={item.Complaint} Id={item.Id} />}
           })
-        
         )
 
         : (
