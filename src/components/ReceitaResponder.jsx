@@ -7,12 +7,61 @@ import Rota from '../services/Rota';
 
 export default (props)=> {
 
+    const Medidas = [
+        {
+            text: "mg de",
+            value: "mg de"
+        },
+        {
+            text: "g de",
+            value: "g de"
+        },
+        {
+            text: "kg de",
+            value: "kg de"
+        },
+        {
+            text: "ml de",
+            value: "ml de"
+        },
+        {
+            text: "l de",
+            value: "l de"
+        },
+        {
+            text: "xícara(s) de chá de",
+            value: "xícara(s) de chá de "
+        },
+        {
+            text: "xícara(s) de ",
+            value: "xícara(s) de "
+        },
+        {
+            text: "colher(es) de chá de",
+            value: "colher(es) de chá de"
+        },
+        {
+            text: "colher(es) de sopa de",
+            value: "colher(es) de sopa de"
+        },
+        {
+            text: "Lata(s) de",
+            value: "Lata(s) de"
+        },
+    ]
+
     const [opcoes, setOpcoes] = useState()
-    const IngredientesOpcoes = opcoes
     const [show, setShow] = useState(true)
     const [abrir, setAbrir] = useState(false)
     var coisa = props.Ingredientes
-    var temp
+    let i = 0
+    let nomeIngre;
+    var AjustarReceita
+    var PegarIngredientes = [ 
+        {
+            text:  nomeIngre
+        } 
+        ]
 
     function PuxarIngredientes(){
         if(opcoes == null){
@@ -65,10 +114,10 @@ export default (props)=> {
                     <List bulleted>
                         {coisa = coisa.split("|"), coisa = coisa.slice(1, coisa.length - 1), coisa.map(item=>{
                             item = item.split(",")
-                            temp = item[0];
+                            AjustarReceita = item[0];
                             item[0] = item[1];
                             item[1] = item[2];
-                            item[2] = temp;
+                            item[2] = AjustarReceita;
                             return (
                                 <List.Item> {item[0] + item[1] + " " + item[2]} </List.Item>
                             )
@@ -89,12 +138,24 @@ export default (props)=> {
                         <Grid columns='equal'>
                             <Grid.Column width={8}>
                                 Nome dos Ingredientes: <br />
-                                {IngredientesOpcoes.map(item=>{
-                                    console.log(item.Name)
-                                })
+                                {opcoes?
+                                (
+                                    opcoes.map(item=>{
+                                        PegarIngredientes[i] = {
+                                            text: item.Name,
+                                            value: item.Name
+                                        }
+                                        i++;
+                                    })
+                                )
+                                :(null)
                                 }
                                 
-                                <Dropdown selection search fluid options={IngredientesOpcoes} style={{marginTop:"2.5%"}} />
+                                {coisa.map(item=>{
+                                    return (
+                                        <Dropdown selection search fluid options={PegarIngredientes} style={{marginTop:"2.5%"}} />
+                                    )
+                                })}
                             </Grid.Column>
                                 
                             <Grid.Column>
@@ -110,7 +171,7 @@ export default (props)=> {
                                 Medidas:
                                 {coisa.map(item=>{
                                     return (
-                                        <Input fluid style={{marginTop:"5%"}} content={item[2]}/>
+                                        <Dropdown selection options={Medidas} fluid style={{marginTop:"5%"}} content={item[2]}/>
                                     )
                                 })}
                             </Grid.Column>

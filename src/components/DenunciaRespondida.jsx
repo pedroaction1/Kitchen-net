@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import {Card,Button, CardContent} from 'semantic-ui-react';
 
 export default (props)=> {
-    {console.log(props)}
+    
     return(
         <>        
             {/*<Card style={{width:"100%"}}>
@@ -23,9 +23,9 @@ export default (props)=> {
                 <Card.Content >
                     <Card.Meta>Remetente: {props.Autor}</Card.Meta>
                     <Card.Meta>Razão de denúncia: {props.Razao}</Card.Meta>
-                    <Card.Description>
-                        E-mail do denunciado: {props.Denunciado}
-                    </Card.Description>
+                    <Card.Description>E-mail do moderador: {props.Moderador}</Card.Description>
+                    <Card.Description>E-mail do denunciado: {props.Denunciado}</Card.Description>
+                    <Card.Description>Data: {props.Data}</Card.Description>
                     <br />
                     <p> Denunciado: {props.Conteudo}</p>
                 </Card.Content>

@@ -15,7 +15,7 @@ import Rota from '../services/Rota'
 
 export default (props)=> {
 
-  const [active,setActive] = useState();
+  const [active,setActive] = useState(true);
   const [denuncia,setDenuncia] = useState();
   const history = useHistory();
   
@@ -70,6 +70,8 @@ export default (props)=> {
       
       if(active == true){
 
+        console.log(denuncia)
+
         return(
           denuncia.map(item=>{
             if(item.Comment_author){return <Denuncia Autor={item.Sender} Razao={item.Complaint_type} Denunciado={item.Comment_author} Conteudo={item.Complaint} Id={item.Id} Image={item.thumbnail}/>}
@@ -80,7 +82,7 @@ export default (props)=> {
       else{
         return(
           denuncia.map(item=>{
-            if(item.Comment_author){return <DenunciaRespondida Razao={item.Complaint} Status={item.Complaint_state} Data={item.data_of} Autor={item.Sender} Denunciado={item.Comment_author} Conteudo={item.Complaint} Id={item.Id} Image={item.thumbnail}/>}
+            if(item.Comment_author){return <DenunciaRespondida Moderador={item.Moderator} Data={item.date_of} Razao={item.Complaint} Status={item.Complaint_state} Data={item.data_of} Autor={item.Sender} Denunciado={item.Comment_author} Conteudo={item.Complaint} Id={item.Id} Image={item.thumbnail}/>}
             else {return <DenunciaRespondida Autor={item.Sender} Razao={item.Complaint_type} Denunciado={item.Playlist_author} Conteudo={item.Complaint} Id={item.Id}/>}
           })
         )
