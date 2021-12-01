@@ -101,8 +101,6 @@ function Login(props) {
 
           </div>
 
-          <h5>Esqueci a Senha</h5>
-
         </div>
       
       </div>

@@ -15,14 +15,17 @@ export default (props)=> {
     const [ingrediente, setIngrediente] = useState([])
     let [quantidade, setQuantidade] = useState([])
     let [medida, setMedida] = useState([])
+    let [mandar, setMandar] = useState([])
     var coisa = props.Ingredientes
     let i = 0
     var AjustarReceita; var PegarIngredientes = [];
-
+    let a = ""
     useEffect(() => {
         coisa.map(item => {
             setData(prev => {
                 prev.push({
+                    Id: 0,
+                    Description: "",
                     Name: '',
                     Amount: '',
                     Measeure: ''
@@ -117,7 +120,7 @@ export default (props)=> {
             <Confirm
                 open={confirmar!=""}
                 onCancel={()=> setConfirmar("")}
-                onConfirm={()=> {MandarBanco(props.Id,props.Autor);setConfirmar("");setShow(false)}}
+                onConfirm={()=> {MandarBanco(props.Id,props.Autor, data);setConfirmar("");setShow(false)}}
                 content={data.content}
                 header={data.header}
                 cancelButton="Cancelar"
@@ -127,7 +130,24 @@ export default (props)=> {
     }
 
     function MandarBanco(id, autor) {
+
+        data.map(item=>{
+            console.log(item.Name)
+            console.log(item.Measeure)
+            console.log(item.Amount)
+            setMandar(mandar.concat({
+                Name: item.Name,
+                Measeure: item.Measeure,
+                Amount: item.Amount,
+                Id: null,
+                Description: null
+            }))
+
+        })
+
         if(confirmar == "Confirmar"){
+
+            console.log(mandar)
 
             axios({
                 method: "POST",
@@ -136,9 +156,7 @@ export default (props)=> {
                     'token': localStorage.getItem("token"),
                 },
                 data: {
-                    "igredients": data[{
-                        
-                    }]
+                    'igredients': mandar
                 }
             })
             .then(response=>{
@@ -166,16 +184,15 @@ export default (props)=> {
     }
    
     function handleChangeIngridente(event, index){
-        console.log(data[1])
+        console.log(data)
         setData(prev => {
             prev[index].Name = event.target.outerText
             return prev
         })
-    
-        console.log(ingrediente)
     }
 
     function handleChange(event, index){
+        console.log(data)
         setData(prev => {
             prev[index].Amount = event.target.value
 
@@ -184,16 +201,13 @@ export default (props)=> {
     }
 
     function handleChangeMedi(event, index){
-        console.log(data)
         setData(prev => {
             prev[index].Measeure = event.target.outerText
             return prev
         })
-    
     }
 
     function SetarIngredientes(){
-
 
         setAbrir(false)
     }
@@ -261,7 +275,9 @@ export default (props)=> {
                                         PegarIngredientes[i] = {
                                             "key": item.Name,
                                             "text": item.Name,
-                                            "value": item.Name
+                                            "value": item.Name,
+                                            
+                                            
                                         }
                                         i++;
                                     })
@@ -340,6 +356,7 @@ export default (props)=> {
                     <Button floated='right' color="green" style={{marginTop:"10px",width:"30%"}} onClick={()=>{setConfirmar("Confirmar")}}>Aprovar</Button>
                 </Card.Content>
             </Card>
+
             {ConfirmarHandler()}
         </>)
         :
