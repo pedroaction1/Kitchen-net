@@ -15,27 +15,17 @@ export default (props)=> {
     const [ingrediente, setIngrediente] = useState([])
     let [quantidade, setQuantidade] = useState([])
     let [medida, setMedida] = useState([])
-    let [linha, setLinha] = useState(
-        [
-            {
-                name: '',
-                quantidade: '',
-                medida: ''
-            }
-        ])
     var coisa = props.Ingredientes
     let i = 0
-    let Ingredientes;
-    let nomeIngre;
     var AjustarReceita; var PegarIngredientes = [];
 
     useEffect(() => {
         coisa.map(item => {
             setData(prev => {
                 prev.push({
-                    name: '',
-                    quantidade: '',
-                    medida: ''
+                    Name: '',
+                    Amount: '',
+                    Measeure: ''
                 })
                 return prev
             })
@@ -146,7 +136,9 @@ export default (props)=> {
                     'token': localStorage.getItem("token"),
                 },
                 data: {
-                    'igredients': ""
+                    "igredients": data[{
+                        
+                    }]
                 }
             })
             .then(response=>{
@@ -159,7 +151,7 @@ export default (props)=> {
         else{
             axios({
                 method: "POST",
-                baseURL: "https://e067-2804-18-8c1-877e-d0c2-a42d-cdd2-a916.ngrok.io/api/recipe/" + id + "/" + autor + "/decline",
+                baseURL: Rota + "api/recipe/" + id + "/" + autor + "/decline",
                 headers: {
                     'token': localStorage.getItem("token"),
                 }
@@ -174,9 +166,9 @@ export default (props)=> {
     }
    
     function handleChangeIngridente(event, index){
-        console.log(data)
+        console.log(data[1])
         setData(prev => {
-            prev[index].name = event.target.outerText
+            prev[index].Name = event.target.outerText
             return prev
         })
     
@@ -185,21 +177,23 @@ export default (props)=> {
 
     function handleChange(event, index){
         setData(prev => {
-            prev[index].quantidade = event.target.value
+            prev[index].Amount = event.target.value
+
             return prev
         })
-    
     }
 
     function handleChangeMedi(event, index){
+        console.log(data)
         setData(prev => {
-            prev[index].medida = event.target.outerText
+            prev[index].Measeure = event.target.outerText
             return prev
         })
     
     }
 
     function SetarIngredientes(){
+
 
         setAbrir(false)
     }
@@ -240,8 +234,6 @@ export default (props)=> {
                             item[0] = item[1].replace(/[,]/g, "");
                             item[1] = item[2];
                             item[2] = AjustarReceita;
-                            console.log(item)
-
                             return (
                                 <List.Item> {item[0] + item[1] + " " + item[2]} </List.Item>
                             )
@@ -279,28 +271,46 @@ export default (props)=> {
                                 
                                 {
                                 data.map((item, index)=>{
-                                    return (
-                                        <Dropdown onChange={(event) => handleChangeIngridente(event, index)} value={item.name} selection search fluid options={PegarIngredientes}   style={{marginTop:"2.5%"}} />
-                                    )
+                                    if(data[index].Name == ''){
+                                        return (
+                                            <Dropdown onChange={(event) => handleChangeIngridente(event, index)} value={ingrediente[index]} selection search fluid options={PegarIngredientes}   style={{marginTop:"2.5%"}} />
+                                        )
+                                    }
+                                    else{
+                                        return (
+                                            <Dropdown onChange={(event) => handleChangeIngridente(event, index)} value={data[index].Name} selection search fluid options={PegarIngredientes}   style={{marginTop:"2.5%"}} />
+                                        )
+                                    }
                                 })}
                             </Grid.Column>
                             <Grid.Column>
                                 Quantidade
                                 {
                                 data.map((item, index)=>{
-                                    return (
-                                        <Input value={item.quantidade} onChange={(event) => handleChange(event,index)} fluid style={{marginTop:"2.5%"}}  />
-                                    )
+                                    if(data[index].Amount == ''){
+                                        return (
+                                            <Input value={quantidade[index]} onChange={(event) => handleChange(event,index)} fluid style={{marginTop:"2.5%"}}  />
+                                        )
+                                    }else{
+                                        return (
+                                            <Input value={item.Amount} onChange={(event) => handleChange(event,index)} fluid style={{marginTop:"2.5%"}}  />
+                                        )
+                                    }
                                 })}
                             </Grid.Column>
 
                             <Grid.Column>
                                 Medidas:
-                                {i = 0,
-                                data.map((item, index)=>{
-                                    return (
-                                        <Dropdown value={item.medida} onChange={(event) => handleChangeMedi(event, index)} selection options={Medidas} fluid style={{marginTop:"2.5%"}}  />
-                                    )
+                                {data.map((item, index)=>{
+                                    if(data[index].Measeure == ''){
+                                        return (
+                                            <Dropdown value={medida[index]} onChange={(event) => handleChangeMedi(event, index)} selection options={Medidas} fluid style={{marginTop:"2.5%"}}  />
+                                        )
+                                    }else {
+                                        return (
+                                            <Dropdown value={item.Measeure} onChange={(event) => handleChangeMedi(event, index)} selection options={Medidas} fluid style={{marginTop:"2.5%"}}  />
+                                        )
+                                    }
                                 })}
                             </Grid.Column>
                             </Grid.Row>
