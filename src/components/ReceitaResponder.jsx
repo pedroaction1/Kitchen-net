@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import {Card,Button,Icon,Form,Image,Segment,List,Modal,Header,Input,Dropdown, Grid,Confirm} from 'semantic-ui-react';
+import React, { useEffect, useState } from 'react';
+import {Card,Button,Icon,Form,Image,Segment,List,Modal,Header,Input,Dropdown,Select, Grid,Confirm} from 'semantic-ui-react';
 import logo from '../logo3.png';
 import Receita from './Receita';
 import axios from 'axios'
@@ -11,14 +11,36 @@ export default (props)=> {
     const [opcoes, setOpcoes] = useState()
     const [show, setShow] = useState(true)
     const [abrir, setAbrir] = useState(false)
-    const [data, setData] = useState("eu sinceramente não ligo se você é virgem");
-    const [ingrediente, setIngrediente] = useState()
-    let [quantidade, setQuantidade] = useState()
-    let [medida, setMedida] = useState()
+    const [data, setData] = useState([]);
+    const [ingrediente, setIngrediente] = useState([])
+    let [quantidade, setQuantidade] = useState([])
+    let [medida, setMedida] = useState([])
+    let [linha, setLinha] = useState(
+        [
+            {
+                name: '',
+                quantidade: '',
+                medida: ''
+            }
+        ])
     var coisa = props.Ingredientes
     let i = 0
+    let Ingredientes;
     let nomeIngre;
     var AjustarReceita; var PegarIngredientes = [];
+
+    useEffect(() => {
+        coisa.map(item => {
+            setData(prev => {
+                prev.push({
+                    name: '',
+                    quantidade: '',
+                    medida: ''
+                })
+                return prev
+            })
+        })
+    },[])
 
     const Medidas = [
         {
@@ -151,16 +173,30 @@ export default (props)=> {
         }
     }
    
-    function handleChangeIngridente(event, data){
-        setIngrediente(event.target.value)
+    function handleChangeIngridente(event, index){
+        console.log(data)
+        setData(prev => {
+            prev[index].name = event.target.outerText
+            return prev
+        })
+    
+        console.log(ingrediente)
     }
 
-    function handleChange(event){
-        setQuantidade(event.target.value)
+    function handleChange(event, index){
+        setData(prev => {
+            prev[index].quantidade = event.target.value
+            return prev
+        })
+    
     }
 
-    function handleChangeMedi(event){
-        setMedida(event.target.value)
+    function handleChangeMedi(event, index){
+        setData(prev => {
+            prev[index].medida = event.target.outerText
+            return prev
+        })
+    
     }
 
     function SetarIngredientes(){
@@ -223,8 +259,9 @@ export default (props)=> {
                     <Modal.Content style={{backgroundColor:"#e24333"}} image>
                         <Modal.Description>
                         <Segment>
-                        <Grid columns='equal'>
-                            <Grid.Column width={8}>
+                        <Grid columns={3}>
+                            <Grid.Row>
+                            <Grid.Column>
                                 Nome dos Ingredientes: <br />
                                 {opcoes?
                                 (
@@ -240,19 +277,19 @@ export default (props)=> {
                                 :(null)
                                 }
                                 
-                                {i = 0,
-                                coisa.map(item=>{
+                                {
+                                data.map((item, index)=>{
                                     return (
-                                        <Dropdown onChange={handleChangeIngridente} value={ingrediente} selection search fluid options={PegarIngredientes}   style={{marginTop:"2.5%"}} />
+                                        <Dropdown onChange={(event) => handleChangeIngridente(event, index)} value={item.name} selection search fluid options={PegarIngredientes}   style={{marginTop:"2.5%"}} />
                                     )
                                 })}
                             </Grid.Column>
-                                
                             <Grid.Column>
                                 Quantidade
-                                {coisa.map(item=>{
+                                {
+                                data.map((item, index)=>{
                                     return (
-                                        <Input value={quantidade} onChange={handleChange} fluid style={{marginTop:"5%"}}  />
+                                        <Input value={item.quantidade} onChange={(event) => handleChange(event,index)} fluid style={{marginTop:"2.5%"}}  />
                                     )
                                 })}
                             </Grid.Column>
@@ -260,12 +297,13 @@ export default (props)=> {
                             <Grid.Column>
                                 Medidas:
                                 {i = 0,
-                                coisa.map(item=>{
+                                data.map((item, index)=>{
                                     return (
-                                        <Dropdown value={medida} onChange={handleChangeMedi} selection options={Medidas} fluid style={{marginTop:"5%"}}  />
+                                        <Dropdown value={item.medida} onChange={(event) => handleChangeMedi(event, index)} selection options={Medidas} fluid style={{marginTop:"2.5%"}}  />
                                     )
                                 })}
                             </Grid.Column>
+                            </Grid.Row>
                         </Grid>
                         </Segment>
                         </Modal.Description>
