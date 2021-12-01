@@ -9,86 +9,14 @@ import Rota from '../services/Rota';
 export default (props)=> {
 
     const [show,setShow] = useState(true);
-    const [confirmar, setConfirmar] = useState("");
     const [receita, setReceita] = useState(false);
     const [vendo, setVendo] = useState(false);
-    const [conteudo, setConteudo] = useState('');
-
-    const RespostadeIngrediente = (childdata) =>{
-        setConteudo(childdata);
-    }
-
-    function MandarBanco(id, autor) {
-        if(confirmar == "Confirmar"){
-
-            axios({
-                method: "POST",
-                baseURL: Rota + "api/recipe/" + id + "/" + autor + "/approve",
-                headers: {
-                    'token': localStorage.getItem("token"),
-                },
-                data: {
-                    'igredients': ""
-                }
-            })
-            .then(response=>{
-                console.log(response);
-            })
-            .catch(err=>{
-                console.log(err);
-            })
-        }
-        else{
-            axios({
-                method: "POST",
-                baseURL: "https://e067-2804-18-8c1-877e-d0c2-a42d-cdd2-a916.ngrok.io/api/recipe/" + id + "/" + autor + "/decline",
-                headers: {
-                    'token': localStorage.getItem("token"),
-                }
-            })
-            .then(response=>{
-                console.log(response);
-            })
-            .catch(err=>{
-                console.log(err);
-            })
-        }
-    }
-
-    function ConfirmarHandler(){
-        let data = {content: "", header: ""}
-
-        if(confirmar == "Confirmar"){
-            data = {
-                content: "Você tem certeza que deseja aprovar esta receita?",
-                header: "Confirmar Receita"
-            }
-        }
-        else{
-            data = {
-                content: "Você tem certeza que deseja rejeitar essa receita?",
-                header: "Rejeitar Receita"
-            }
-        }
-
-        return(
-            <Confirm
-                open={confirmar!=""}
-                onCancel={()=> setConfirmar("")}
-                onConfirm={()=> {MandarBanco(props.Id, props.Autor);setConfirmar("");setShow(false)}}
-                content={data.content}
-                header={data.header}
-                cancelButton="Cancelar"
-                confirmButton="Sim"
-            />
-        )
-    }
 
     function GetRecipeBig(){
 
         if( receita == true ){
             return(
-                <ReceitaResponder childToParent={RespostadeIngrediente} Titulo={props.Titulo} Autor={props.Autor} 
+                <ReceitaResponder Titulo={props.Titulo} Autor={props.Autor} Id={props.Id}
                 Sobre={props.Sobre} porcoes={props.Porcao} Ingredientes={props.Ingredientes} />
             )
         }
@@ -116,13 +44,11 @@ export default (props)=> {
                     :
                         <Button basic color="blue" fluid onClick={()=> {{setReceita(!receita); setVendo(!vendo)} {GetRecipeBig()}} }>Expandir</Button>
                     }
-                    <Button  color="red" style={{marginTop:"10px",width:"30%"}} onClick={()=>{setConfirmar("Reprovar")}}>Reprovar</Button>
-                    <Button  color="green" style={{marginTop:"10px",width:"30%"}} onClick={()=>{setConfirmar("Confirmar")}}>Aprovar</Button>
+
                 </Card.Content>
             </Card>
 
-            <div style={{display: "none"}}>{props.Sobre} {props.Autor} {props.Porcao} {props.Ingredientes} {props.Image} {conteudo} </div>
-            {ConfirmarHandler()}
+            <div style={{display: "none"}}>{props.Sobre} {props.Id} {props.Autor} {props.Porcao} {props.Ingredientes} {props.Image} </div>
             {GetRecipeBig()}
         </>)
         :

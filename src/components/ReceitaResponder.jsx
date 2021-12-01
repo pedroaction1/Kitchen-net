@@ -1,11 +1,24 @@
 import React, { useState } from 'react';
-import {Card,Button,Icon,Form,Image,Segment,List,Modal,Header,Input,Dropdown, Grid} from 'semantic-ui-react';
+import {Card,Button,Icon,Form,Image,Segment,List,Modal,Header,Input,Dropdown, Grid,Confirm} from 'semantic-ui-react';
 import logo from '../logo3.png';
 import Receita from './Receita';
 import axios from 'axios'
 import Rota from '../services/Rota';
 
-export default (props, {childToParent})=> {
+export default (props)=> {
+
+    const [confirmar, setConfirmar] = useState("");
+    const [opcoes, setOpcoes] = useState()
+    const [show, setShow] = useState(true)
+    const [abrir, setAbrir] = useState(false)
+    const [data, setData] = useState("eu sinceramente não ligo se você é virgem");
+    const [ingrediente, setIngrediente] = useState()
+    let [quantidade, setQuantidade] = useState()
+    let [medida, setMedida] = useState()
+    var coisa = props.Ingredientes
+    let i = 0
+    let nomeIngre;
+    var AjustarReceita; var PegarIngredientes = [];
 
     const Medidas = [
         {
@@ -50,24 +63,6 @@ export default (props, {childToParent})=> {
         },
     ]
 
-    const [opcoes, setOpcoes] = useState()
-    const [show, setShow] = useState(true)
-    const [abrir, setAbrir] = useState(false)
-    const [data, setData] = useState("eu sinceramente não ligo se você é virgem");
-    var coisa = props.Ingredientes
-    let i = 0
-    let nomeIngre;
-    var AjustarReceita
-    var PegarIngredientes = [ 
-        {
-            text:  nomeIngre
-        } 
-        ]
-
-    function SetarIngredientes(){
-
-    }
-
     function PuxarIngredientes(){
         if(opcoes == null){
             axios({
@@ -90,9 +85,91 @@ export default (props, {childToParent})=> {
         }
     }
 
+    function ConfirmarHandler(){
+        let data = {content: "", header: ""}
+
+        if(confirmar == "Confirmar"){
+            data = {
+                content: "Você tem certeza que deseja aprovar esta receita?",
+                header: "Confirmar Receita"
+            }
+        }
+        else{
+            data = {
+                content: "Você tem certeza que deseja rejeitar essa receita?",
+                header: "Rejeitar Receita"
+            }
+        }
+
+        return(
+            <Confirm
+                open={confirmar!=""}
+                onCancel={()=> setConfirmar("")}
+                onConfirm={()=> {MandarBanco(props.Id,props.Autor);setConfirmar("");setShow(false)}}
+                content={data.content}
+                header={data.header}
+                cancelButton="Cancelar"
+                confirmButton="Sim"
+            />
+        )
+    }
+
+    function MandarBanco(id, autor) {
+        if(confirmar == "Confirmar"){
+
+            axios({
+                method: "POST",
+                baseURL: Rota + "api/recipe/" + id + "/" + autor + "/approve",
+                headers: {
+                    'token': localStorage.getItem("token"),
+                },
+                data: {
+                    'igredients': ""
+                }
+            })
+            .then(response=>{
+                console.log(response);
+            })
+            .catch(err=>{
+                console.log(err);
+            })
+        }
+        else{
+            axios({
+                method: "POST",
+                baseURL: "https://e067-2804-18-8c1-877e-d0c2-a42d-cdd2-a916.ngrok.io/api/recipe/" + id + "/" + autor + "/decline",
+                headers: {
+                    'token': localStorage.getItem("token"),
+                }
+            })
+            .then(response=>{
+                console.log(response);
+            })
+            .catch(err=>{
+                console.log(err);
+            })
+        }
+    }
+   
+    function handleChangeIngridente(event, data){
+        setIngrediente(event.target.value)
+    }
+
+    function handleChange(event){
+        setQuantidade(event.target.value)
+    }
+
+    function handleChangeMedi(event){
+        setMedida(event.target.value)
+    }
+
+    function SetarIngredientes(){
+
+        setAbrir(false)
+    }
+
     return(
-        (show)?
-        (
+        (show)?(
         <>
             <Card style={{width:"100%",fontSize:"15px"}}>
                 <Card.Content style={{ backgroundColor:"#e24333"}}>
@@ -106,6 +183,9 @@ export default (props, {childToParent})=> {
                         <strong>Autor:</strong> {props.Autor} <br />
                         <strong>Sobre:</strong> {props.Sobre} <br />
                         <strong>Porções:</strong> {props.porcoes} <br />
+                        {ingrediente}
+                        {quantidade}
+                        {medida}
                     </Form>
                     <strong>Mídia Principal:</strong><br />
                     <Segment basic fluid textAlign='center'>
@@ -118,11 +198,14 @@ export default (props, {childToParent})=> {
                     <strong>Ingredientes:</strong>
                     <List bulleted>
                         {coisa = coisa.split("|"), coisa = coisa.slice(1, coisa.length - 1), coisa.map(item=>{
-                            item = item.split(",")
+                            item = item.split("*")
+                            item = item.slice(1, item.length - 1)
                             AjustarReceita = item[0];
-                            item[0] = item[1];
+                            item[0] = item[1].replace(/[,]/g, "");
                             item[1] = item[2];
                             item[2] = AjustarReceita;
+                            console.log(item)
+
                             return (
                                 <List.Item> {item[0] + item[1] + " " + item[2]} </List.Item>
                             )
@@ -134,7 +217,7 @@ export default (props, {childToParent})=> {
                     onClose={() => setAbrir(false)}
                     onOpen={() => setAbrir(true)}
                     open={abrir}
-                    trigger={<Button onClick={(PuxarIngredientes()),() => childToParent(data)} fluid style={{ backgroundColor: "#e24333", color: "white"}}>Editar Ingrediente</Button> }
+                    trigger={<Button onClick={PuxarIngredientes()} fluid style={{ backgroundColor: "#e24333", color: "white"}}>Editar Ingrediente</Button> }
                     >
                     <Modal.Header  style={{backgroundColor:"#e24333",color:"white",textAlign:"center"}} textAlign="center">Ingredientes</Modal.Header>
                     <Modal.Content style={{backgroundColor:"#e24333"}} image>
@@ -147,8 +230,9 @@ export default (props, {childToParent})=> {
                                 (
                                     opcoes.map(item=>{
                                         PegarIngredientes[i] = {
-                                            text: item.Name,
-                                            value: item.Name
+                                            "key": item.Name,
+                                            "text": item.Name,
+                                            "value": item.Name
                                         }
                                         i++;
                                     })
@@ -156,9 +240,10 @@ export default (props, {childToParent})=> {
                                 :(null)
                                 }
                                 
-                                {coisa.map(item=>{
+                                {i = 0,
+                                coisa.map(item=>{
                                     return (
-                                        <Dropdown selection search fluid options={PegarIngredientes} style={{marginTop:"2.5%"}} />
+                                        <Dropdown onChange={handleChangeIngridente} value={ingrediente} selection search fluid options={PegarIngredientes}   style={{marginTop:"2.5%"}} />
                                     )
                                 })}
                             </Grid.Column>
@@ -167,16 +252,17 @@ export default (props, {childToParent})=> {
                                 Quantidade
                                 {coisa.map(item=>{
                                     return (
-                                        <Input fluid style={{marginTop:"5%"}}/>
+                                        <Input value={quantidade} onChange={handleChange} fluid style={{marginTop:"5%"}}  />
                                     )
                                 })}
                             </Grid.Column>
 
                             <Grid.Column>
                                 Medidas:
-                                {coisa.map(item=>{
+                                {i = 0,
+                                coisa.map(item=>{
                                     return (
-                                        <Dropdown selection options={Medidas} fluid style={{marginTop:"5%"}} />
+                                        <Dropdown value={medida} onChange={handleChangeMedi} selection options={Medidas} fluid style={{marginTop:"5%"}}  />
                                     )
                                 })}
                             </Grid.Column>
@@ -189,7 +275,7 @@ export default (props, {childToParent})=> {
                         content="Salvar Ingredientes"
                         labelPosition='right'
                         icon='checkmark'
-                        onClick={() => setAbrir(false), SetarIngredientes()}
+                        onClick={() => SetarIngredientes()}
                         positive
                         />
                     </Modal.Actions>
@@ -201,7 +287,12 @@ export default (props, {childToParent})=> {
                         </Card.Content>
                     </Card>
                 </Card.Content>
+                <Card.Content>
+                    <Button floated='right' color="red" style={{marginTop:"10px",width:"30%"}} onClick={()=>{setConfirmar("Reprovar")}}>Reprovar</Button>
+                    <Button floated='right' color="green" style={{marginTop:"10px",width:"30%"}} onClick={()=>{setConfirmar("Confirmar")}}>Aprovar</Button>
+                </Card.Content>
             </Card>
+            {ConfirmarHandler()}
         </>)
         :
         null

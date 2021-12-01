@@ -102,6 +102,10 @@ export default (props)=> {
     }
   }
 
+  function HeaderDinamico(){
+    
+  }
+
   return (
     
     <>
