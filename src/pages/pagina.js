@@ -82,7 +82,7 @@ export default (props)=> {
       else{
         return(
           denuncia.map(item=>{
-            if(item.Comment_author){return <DenunciaRespondida Moderador={item.Moderator} Data={item.date_of} Razao={item.Complaint} Status={item.Complaint_state} Data={item.data_of.slice(0,10)} Autor={item.Sender} Denunciado={item.Comment_author} Conteudo={item.Complaint} Id={item.Id} Image={item.thumbnail}/>}
+            if(item.Comment_author){return <DenunciaRespondida Moderador={item.Moderator} Data={item.date_of} Razao={item.Complaint} Status={item.Complaint_state} Data={item.data_of} Autor={item.Sender} Denunciado={item.Comment_author} Conteudo={item.Complaint} Id={item.Id} Image={item.thumbnail}/>}
             else {return <DenunciaRespondida Autor={item.Sender} Razao={item.Complaint_type} Denunciado={item.Playlist_author} Conteudo={item.Complaint} Id={item.Id} Moderador={item.Moderator} Data={item.date_of} />}
           })
         )

@@ -11,13 +11,14 @@ export default (props)=> {
     const [show,setShow] = useState(true);
     const [receita, setReceita] = useState(false);
     const [vendo, setVendo] = useState(false);
+    const [etapas, setEtapas] = useState()
 
     function GetRecipeBig(){
 
         if( receita == true ){
             return(
                 <ReceitaResponder Titulo={props.Titulo} Autor={props.Autor} Id={props.Id}
-                Sobre={props.Sobre} porcoes={props.Porcao} Ingredientes={props.Ingredientes} />
+                Sobre={props.Sobre} porcoes={props.Porcao} Ingredientes={props.Ingredientes} Steps={props.Steps} />
             )
         }
     }

@@ -12,14 +12,16 @@ export default (props)=> {
     const [show, setShow] = useState(true)
     const [abrir, setAbrir] = useState(false)
     const [data, setData] = useState([]);
+    const [mandar, setMandar] = useState([])
     const [ingrediente, setIngrediente] = useState([])
+    const [etapas, setEtapas] = useState(props.Steps);
     let [quantidade, setQuantidade] = useState([])
     let [medida, setMedida] = useState([])
-    let [mandar, setMandar] = useState([])
     var coisa = props.Ingredientes
     let i = 0
     var AjustarReceita; var PegarIngredientes = [];
     let a = ""
+
     useEffect(() => {
         coisa.map(item => {
             setData(prev => {
@@ -31,6 +33,16 @@ export default (props)=> {
                     Measeure: ''
                 })
                 return prev
+            })
+            setMandar(antigoMandar =>{
+                antigoMandar.push({
+                    Id: 0,
+                    Description: "",
+                    Name: '',
+                    Amount: '',
+                    Measeure: ''
+                })
+                return antigoMandar
             })
         })
     },[])
@@ -120,7 +132,7 @@ export default (props)=> {
             <Confirm
                 open={confirmar!=""}
                 onCancel={()=> setConfirmar("")}
-                onConfirm={()=> {MandarBanco(props.Id,props.Autor, data);setConfirmar("");setShow(false)}}
+                onConfirm={()=> {SetarMandar();MandarBanco(props.Id, props.Autor);setConfirmar("");setShow(false);}}
                 content={data.content}
                 header={data.header}
                 cancelButton="Cancelar"
@@ -129,25 +141,24 @@ export default (props)=> {
         )
     }
 
+    function SetarMandar(){
+        data.map((item, index)=>{
+            setMandar((antigoMandar) =>{
+                antigoMandar[index].Name = data[index].Name
+                antigoMandar[index].Amount = data[index].Amount
+                antigoMandar[index].Measeure = data[index].Measeure
+                return antigoMandar
+            });
+        })
+    };
+
     function MandarBanco(id, autor) {
 
-        data.map(item=>{
-            console.log(item.Name)
-            console.log(item.Measeure)
-            console.log(item.Amount)
-            setMandar(mandar.concat({
-                Name: item.Name,
-                Measeure: item.Measeure,
-                Amount: item.Amount,
-                Id: null,
-                Description: null
-            }))
+        i = 0;
 
-        })
-
+        console.log(mandar)
+        
         if(confirmar == "Confirmar"){
-
-            console.log(mandar)
 
             axios({
                 method: "POST",
@@ -164,21 +175,7 @@ export default (props)=> {
             })
             .catch(err=>{
                 console.log(err);
-            })
-        }
-        else{
-            axios({
-                method: "POST",
-                baseURL: Rota + "api/recipe/" + id + "/" + autor + "/decline",
-                headers: {
-                    'token': localStorage.getItem("token"),
-                }
-            })
-            .then(response=>{
-                console.log(response);
-            })
-            .catch(err=>{
-                console.log(err);
+                console.log(mandar)
             })
         }
     }
@@ -205,11 +202,6 @@ export default (props)=> {
             prev[index].Measeure = event.target.outerText
             return prev
         })
-    }
-
-    function SetarIngredientes(){
-
-        setAbrir(false)
     }
 
     return(
@@ -289,12 +281,12 @@ export default (props)=> {
                                 data.map((item, index)=>{
                                     if(data[index].Name == ''){
                                         return (
-                                            <Dropdown onChange={(event) => handleChangeIngridente(event, index)} value={ingrediente[index]} selection search fluid options={PegarIngredientes}   style={{marginTop:"2.5%"}} />
+                                            <Dropdown allowAdditions onChange={(event) => handleChangeIngridente(event, index)}  value={ingrediente[index]} selection search fluid options={PegarIngredientes}   style={{marginTop:"2.5%"}} />
                                         )
                                     }
                                     else{
                                         return (
-                                            <Dropdown onChange={(event) => handleChangeIngridente(event, index)} value={data[index].Name} selection search fluid options={PegarIngredientes}   style={{marginTop:"2.5%"}} />
+                                            <Dropdown allowAdditions onChange={(event) => handleChangeIngridente(event, index)} value={data[index].Name} selection search fluid options={PegarIngredientes}   style={{marginTop:"2.5%"}} />
                                         )
                                     }
                                 })}
@@ -339,16 +331,22 @@ export default (props)=> {
                         content="Salvar Ingredientes"
                         labelPosition='right'
                         icon='checkmark'
-                        onClick={() => SetarIngredientes()}
+                        onClick={() => setAbrir(false)}
                         positive
                         />
                     </Modal.Actions>
                     </Modal>
                     <strong>Etapas:</strong>
                     <Card fluid style={{ backgroundColor: "#e24333"}}>
-                        <Card.Content>
-                            <Card.Header style={{ color: "white"}}>1 <Image size='tiny' src={logo}/> Passo número 1</Card.Header>
-                        </Card.Content>
+                        {console.log(etapas),
+                        etapas.map(item=>{
+                            return(
+                            <Card.Content>
+                                <Card.Header style={{ color: "white"}}>{item.Number} -  {item.Description}</Card.Header>
+                                <Card.Meta style={{color:"white"}}>Dica: {item.Tip}</Card.Meta>
+                            </Card.Content>
+                            )
+                        })}
                     </Card>
                 </Card.Content>
                 <Card.Content>
