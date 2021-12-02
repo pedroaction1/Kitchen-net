@@ -102,25 +102,18 @@ export default (props)=> {
     }
   }
 
-  function HeaderDinamico(){
-    
-  }
-
   return (
     
     <>
     <Segment style={{backgroundColor:"#e24333",display:"flex",alignItems:"center"}} className="Navbar">
       <div style={{display:"flex"}}>
           <img src={logo} className="LogoP" />
-        <Header as="h1" style={{color:"white", marginTop:"3.5vh"}}>Denúncias Pendentes</Header>
+        <Header as="h1" style={{color:"white", marginTop:"3.5vh"}}>Denúncias</Header>
       </div>
 
       <div style={{display:"flex",alignItems:"center",flexDirection:"column",marginLeft:"auto",marginRight:"5%"}}>
-        <Header as="h4" style={{color:"white"}}>logado como: {}</Header>
-        <div className="NavLinks">
-            <Link to="#" style={{color:"white",marginLeft:"20px"}}>
-              Altera senha
-            </Link>       
+        <Header as="h4" style={{color:"white"}}>Logado como: {localStorage.getItem("login")}</Header>
+        <div className="NavLinks">  
             <Link onClick={Sair} to="../" style={{color:"white",marginLeft:"20px"}} >
               Sair
             </Link>   

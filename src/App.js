@@ -14,27 +14,6 @@ function Login(props) {
   const [ password, setPassword ] = useState("");
   const [ username, setUsername] = useState("");
   const history = useHistory();
-  
-  function RodarReceita(){
-
-      axios({
-        method: 'post',
-        baseURL: Rota + 'api/recipe',
-        data:{
-          "name":"chup chup de leite condensado",
-          "description":"chup chup gostoso para você si deliciar",
-          "portions": 10,
-          "difficulty": 1,
-          "recommended_level": 1,
-          "categories": [],
-          "igredients": "|*leite condensado*,395,*g de*|*leite*,1,*litro*|",
-          "steps": []
-      },
-        headers:{
-          'token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImhlbnJpcXVlQGdtYWlsLmNvbSIsImlhdCI6MTYzODM2OTQ0MCwiZXhwIjoxNjM4Mzk4MjQwfQ.MclNSaRd4eBWt1aQpmlgzm0OaQ2bb0grvf2X9_aT0Dw"
-        }
-      })
-  }
 
   async function Logar(){
     axios({
@@ -49,6 +28,7 @@ function Login(props) {
       localStorage.setItem("token", data.data.token)
       localStorage.setItem("valido", data.data.validated)
       localStorage.setItem("tipo", data.data.type)
+      localStorage.setItem("login", username)
 
       if (localStorage.getItem("tipo") == 4)
       {
@@ -97,8 +77,6 @@ function Login(props) {
               
               <Button color="red" onClick={()=>{Logar()}}>Login</Button>           
   
-              <Button onClick={()=>{RodarReceita()}}>Rodar Receita</Button>
-
           </div>
 
         </div>

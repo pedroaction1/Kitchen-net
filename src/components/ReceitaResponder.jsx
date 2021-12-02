@@ -281,12 +281,12 @@ export default (props)=> {
                                 data.map((item, index)=>{
                                     if(data[index].Name == ''){
                                         return (
-                                            <Dropdown allowAdditions onChange={(event) => handleChangeIngridente(event, index)}  value={ingrediente[index]} selection search fluid options={PegarIngredientes}   style={{marginTop:"2.5%"}} />
+                                            <Dropdown  onChange={(event) => handleChangeIngridente(event, index)}  value={ingrediente[index]} selection search fluid options={PegarIngredientes}   style={{marginTop:"2.5%"}} />
                                         )
                                     }
                                     else{
                                         return (
-                                            <Dropdown allowAdditions onChange={(event) => handleChangeIngridente(event, index)} value={data[index].Name} selection search fluid options={PegarIngredientes}   style={{marginTop:"2.5%"}} />
+                                            <Dropdown  onChange={(event) => handleChangeIngridente(event, index)} value={data[index].Name} selection search fluid options={PegarIngredientes}   style={{marginTop:"2.5%"}} />
                                         )
                                     }
                                 })}

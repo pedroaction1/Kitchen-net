@@ -45,15 +45,12 @@ export default (props)=> {
     <Segment style={{backgroundColor:"#e24333",display:"flex",alignItems:"center"}} className="Navbar">
       <div style={{display:"flex"}}>
           <img src={logo} className="LogoP" />
-        <Header as="h1" style={{color:"white", marginTop:"6vh"}}>Receitas pendentes</Header>
+        <Header as="h1" style={{color:"white", marginTop:"2.5vh"}}>Receitas pendentes</Header>
       </div>
 
       <div style={{display:"flex",alignItems:"center",flexDirection:"column",marginLeft:"auto",marginRight:"5%"}}>
-        <Header as="h4" style={{color:"white"}}>logado como: Alexadre da Silva Pereira</Header>
-        <div className="NavLinks">
-            <Link to="#" style={{color:"white",marginLeft:"20px"}}>
-              Altera senha
-            </Link>       
+        <Header as="h4" style={{color:"white"}}>Logado como: {localStorage.getItem("login")}</Header>
+        <div className="NavLinks">     
             <Link to="../" style={{color:"white",marginLeft:"20px"}} >
               Sair
             </Link>   
@@ -62,16 +59,6 @@ export default (props)=> {
     </Segment>    
 
     <Grid style={{}}>
-      <Grid.Column>
-        <Menu vertical style={{marginLeft:"20px",padding:"1rem"}}>
-          <Menu.Item name="pendentes" active={active === "pendentes"} onClick={(e)=>{setActive("pendentes")}}>
-            Pendentes
-          </Menu.Item>
-          <Menu.Item name="respondidas" active={active === "respondidas"} onClick={(e)=>{setActive("respondidas")}}>
-            Respondidas
-          </Menu.Item>
-        </Menu>
-      </Grid.Column>
       <Grid.Column width="8" style={{margin:"auto"}}>
         {receita?
         (
