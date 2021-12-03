@@ -236,13 +236,15 @@ export default (props)=> {
                         {coisa = coisa.split("|"), coisa = coisa.slice(1, coisa.length - 1), coisa.map(item=>{
                             item = item.split("*")
                             item = item.slice(1, item.length - 1)
-                            AjustarReceita = item[0];
-                            item[0] = item[1].replace(/[,]/g, "");
-                            item[1] = item[2];
-                            item[2] = AjustarReceita;
-                            return (
+                            if(item[0] != null){      
+                               AjustarReceita = item[0];
+                               item[0] = item[1].replace(/[,]/g, "");
+                               item[1] = item[2];
+                               item[2] = AjustarReceita;
+                               return (
                                 <List.Item> {item[0] + item[1] + " " + item[2]} </List.Item>
-                            )
+                              )
+                            }
                         })}
                     </List>
                     <br />
